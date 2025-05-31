@@ -1,28 +1,46 @@
-document.getElementById('start-button').addEventListener('click', () => {
-  document.getElementById('start-screen').style.display = 'none';
-  document.getElementById('choice-screen').style.display = 'block';
-});
+const startScreen = document.getElementById('start-screen');
+    const choiceScreen = document.getElementById('choice-screen');
+    const gameScreen = document.getElementById('game-screen');
+    const introText = document.getElementById('intro-text');
+    const choicesDiv = document.getElementById('choices');
 
-document.querySelectorAll('.choice-button').forEach(button => {
-  button.addEventListener('click', () => {
-    const anime = button.dataset.anime;
-    let story = "";
-
-    if (anime === "attack") {
-      story = "당신은 거인을 처치하는 조사병단의 신병입니다...";
-    } else if (anime === "haikyuu") {
-      story = "당신은 카라스노 고교의 새로운 세터입니다...";
+    function goToStart() {
+      startScreen.classList.remove('hidden');
+      choiceScreen.classList.add('hidden');
+      gameScreen.classList.add('hidden');
     }
 
-    document.getElementById('choice-screen').style.display = 'none';
-    document.getElementById('game-screen').style.display = 'block';
-    document.getElementById('story-text').innerText = story;
-  });
-});
+    function goToChoice() {
+      startScreen.classList.add('hidden');
+      choiceScreen.classList.remove('hidden');
+    }
 
-document.getElementById('home-button').addEventListener('click', () => {
-  location.reload();
-});
-document.getElementById('home-button-game').addEventListener('click', () => {
-  location.reload();
-});
+    function startGame(anime) {
+      choiceScreen.classList.add('hidden');
+      gameScreen.classList.remove('hidden');
+
+      let text = '';
+      let options = [];
+
+      if (anime === 'attack') {
+        text = '...눈을 떴다. 거대한 벽이 눈앞에 펼쳐졌다.';
+        options = ['조사병단에 입단한다', '헌병단에 입단한다', '도망친다다'];
+      } else if (anime === 'haikyu') {
+        text = '...눈을 떴다. 체육관의 소리가 들려온다.';
+        options = ['히나타에게 말을 건다', '카게야마에게 말을 건다'];
+      }
+
+      introText.innerText = text;
+      choicesDiv.innerHTML = '';
+      choicesDiv.style.position = 'absolute';
+      choicesDiv.style.bottom = '50px';
+      choicesDiv.style.display = 'flex';
+      choicesDiv.style.gap = '20px';
+
+      options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.innerText = option;
+        btn.onclick = () => alert(`선택한 행동: ${option}`);
+        choicesDiv.appendChild(btn);
+      });
+    }

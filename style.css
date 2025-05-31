@@ -1,45 +1,60 @@
-body {
-  background-color: #000;
-  color: #fff;
-  font-family: 'Courier New', monospace;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  position: relative;
-  background-image: url('your-background.jpg');
-  background-size: cover;
-  background-position: center;
-}
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+    }
 
-button {
-  background-color: #444;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  margin: 10px;
-}
+    h1 {
+      font-size: 3rem;
+      text-align: center;
+    }
 
-button:hover {
-  background-color: #666;
-  transform: scale(1.05);
-}
+    #start-button {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
 
-#choices {
-  position: absolute;
-  bottom: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-}
+    .hidden {
+      display: none;
+    }
 
-.small-button {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  font-size: 0.9rem;
-  padding: 5px 10px;
-}
+    #choices {
+      position: absolute;
+      bottom: 50px;
+      display: flex;
+      gap: 20px;
+    }
+
+    #choices button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #back-button {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      font-size: 0.8rem;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    #intro-text {
+      margin-bottom: 100px;
+      font-size: 1.2rem;
+      text-align: center;
+      padding: 0 20px;
+    }

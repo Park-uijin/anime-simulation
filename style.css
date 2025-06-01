@@ -9,6 +9,32 @@ body {
   overflow: hidden;
 }
 
+#ending-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+#ending-screen button {
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+#ending-screen button:hover {
+  background-color: #666;
+  transform: scale(1.05);
+}
+
 /* 공통 화면 스타일 */
 .screen {
   display: flex;

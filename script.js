@@ -63,8 +63,8 @@ function displayStep() {
   choiceBox.classList.add("hidden");
 
   if (!step) {
-    storyBox.innerText = "스토리가 종료되었습니다.";
-    nextBtn.style.display = "none";
+    document.getElementById("story-screen").classList.add("hidden");
+    document.getElementById("ending-screen").classList.remove("hidden"); // 엔딩 화면 표시
     return;
   }
 
@@ -80,7 +80,14 @@ function displayStep() {
         storyBox.innerText = choice.result;
         nextBtn.style.display = "block";
         choiceBox.classList.add("hidden");
-        currentStep++;
+
+        // 동료를 구하는 선택 시 즉시 엔딩으로 이동
+        if (choice.text === "동료를 구한다") {
+          document.getElementById("story-screen").classList.add("hidden");
+          document.getElementById("ending-screen").classList.remove("hidden");
+        } else {
+          currentStep++;
+        }
       };
       choiceBox.appendChild(btn);
     });

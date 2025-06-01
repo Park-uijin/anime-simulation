@@ -72,7 +72,7 @@ body {
 /* 시작하기 버튼 */
 .start-button {
   position: absolute;
-  bottom: 40px;
+  bottom: 80px; /* 기존 40px보다 위로 */
   right: 40px;
   padding: 15px 30px;
   font-size: 1.2rem;
@@ -98,8 +98,9 @@ body {
 }
 
 .button-group button {
-  padding: 12px 20px;
-  font-size: 1rem;
+  padding: 15px 25px;
+  font-size: 1.4rem;
+  width: 100%; /* 버튼을 선택지 영역 크기에 맞춤 */
   background-color: #333;
   color: white;
   border: none;
@@ -111,6 +112,21 @@ body {
 .button-group button:hover {
   background-color: #555;
 }
+
+#choice-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 33vh; /* 전체 화면의 1/3 크기 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
 
 /* 메시지 박스 */
 .story-box {

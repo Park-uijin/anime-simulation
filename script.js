@@ -20,36 +20,22 @@ const stories = {
     },
     { type: "text", content: "당신의 여정은 이제 시작이다." }
   ],
-  haikyuu: [
-    { type: "text", content: "당신은 배구부에 새로 들어온 신입이다." },
-    { type: "text", content: "첫 훈련에서 주장의 눈에 띄었다." },
-    {
-      type: "choice", choices: [
-        { text: "열심히 따라간다", result: "팀워크가 점점 좋아진다." },
-        { text: "혼자 연습한다", result: "기량은 늘었지만 팀과 소원해졌다." }
-      ]
-    },
-    { type: "text", content: "연습 경기 당일, 중요한 순간이 왔다." },
-    {
-      type: "choice", choices: [
-        { text: "서브를 한다", result: "훌륭한 서브로 점수를 얻었다!" },
-        { text: "동료에게 넘긴다", result: "좋은 패스로 연결되어 득점!" }
-      ]
-    },
-    { type: "text", content: "당신은 팀의 핵심으로 성장 중이다." }
-  ]
-};
-
+ 
 function startGame() {
   document.getElementById("start-screen").classList.add("hidden");
   document.getElementById("choice-screen").classList.remove("hidden");
+  currentStory = stories['attack']; // 진격의 거인 스토리 자동 설정
+  currentStep = 0;
+  displayStep();
+
 }
 
-function selectStory(storyKey) {
-  currentStory = stories[storyKey];
-  currentStep = 0;
-  document.getElementById("choice-screen").classList.add("hidden");
+function selectCharacter(character) {
+  selectedCharacter = character; // 선택한 캐릭터 저장
+  document.getElementById("character-screen").classList.add("hidden");
   document.getElementById("story-screen").classList.remove("hidden");
+  currentStory = stories['attack']; // ✅ 선택 없이 바로 '진격의 거인' 진행
+  currentStep = 0;
   displayStep();
 }
 

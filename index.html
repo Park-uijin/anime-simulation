@@ -8,26 +8,17 @@
 </head>
 <body>
   <!-- 시작 화면 -->
-  <div id="start-screen" class="screen">
-    <h1 class="title">애니 시뮬레이션</h1>
-    <button id="start-button" class="start-button" onclick="startGame()">시작하기</button>
-  </div>
-
-  <!-- 애니 선택 화면 -->
-  <div id="choice-screen" class="screen hidden">
-    <h2>스토리 선택</h2>
-    <div class="button-group">
-      <button onclick="selectStory('attack')">진격의 거인</button>
-      <button onclick="selectStory('haikyuu')">하이큐!!</button>
-    </div>
-    <button class="home-button" onclick="goHome()">← 처음으로</button>
-  </div>
+<div id="start-screen" class="screen">
+  <h1 class="title">진격의 거인 시뮬레이션</h1>
+  <button id="start-button" class="start-button" onclick="startGame()">시작하기</button>
+</div>
 
   <!-- 스토리 화면 -->
   <div id="story-screen" class="screen hidden">
     <div id="story-box" class="story-box">스토리가 여기에 표시됩니다.</div>
     <div id="choice-buttons" class="button-group hidden"></div>
     <button id="next-button" onclick="nextStory()">다음</button>
+    <button id="before-button" onclick="beforeStory()">이전</button>
     <button class="home-button" onclick="goHome()">← 처음으로</button>
   </div>
 

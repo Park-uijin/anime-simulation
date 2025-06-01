@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>애니메이션 RPG</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>인터랙티브 RPG</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div id="start-screen">
-    <h1>애니메이션 세계로의 초대</h1>
-    <button id="start-button">시작하기</button>
+    <h1>내가 주인공인 애니메이션</h1>
+    <button onclick="startGame()">시작하기</button>
   </div>
 
-  <div id="choice-screen" style="display:none;">
-    <h2>애니메이션을 선택하세요</h2>
-    <div id="choices">
-      <button class="choice-button" data-anime="attack">진격의 거인</button>
-      <button class="choice-button" data-anime="haikyuu">하이큐</button>
-    </div>
-    <button id="home-button" class="small-button">처음으로</button>
+  <div id="choice-screen" class="hidden">
+    <button onclick="selectStory('attack')">진격의 거인</button>
+    <button onclick="selectStory('haikyuu')">하이큐</button>
   </div>
 
-  <div id="game-screen" style="display:none;">
-    <div id="story-text"></div>
-    <button id="home-button-game" class="small-button">처음으로</button>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+  <div id="story-screen" class="hidden">
+    <div id="story-box"></div>
+    <div id="choice-buttons" class="hidden"></div>
+    <button id="next-button" onclick="nextStory()">다음</button>
+    <button id="home

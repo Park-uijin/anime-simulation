@@ -93,3 +93,8 @@ function nextStory() {
   currentStep++;
   displayStep();
 }
+
+function goHome() {
+  document.getElementById("story-screen").classList.add("hidden");
+  document.getElementById("start-screen").classList.remove("hidden");
+}

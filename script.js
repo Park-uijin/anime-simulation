@@ -3,18 +3,18 @@ let currentStory = [];
 
 const stories = {
   attack: [
-    { type: "text", content: "당신은 훈련병으로 입단했다." },
-    { type: "text", content: "사고로 거인이 침입했고, 이제 선택이 필요하다." },
+    { type: "text", content: "당신은 조사병단 훈련병으로 입단했다." },
+    { type: "text", content: "벽이 무너져 거인이 침입했고, 이제 선택이 필요하다." },
     {
       type: "choice", choices: [
         { text: "싸운다", result: "당신은 무기를 들고 앞으로 나아갔다." },
-        { text: "숨는다", result: "당신은 창고 뒤에 숨었다." }
+        { text: "도망친다", result: "월로제로 도망친다." }
       ]
     },
     { type: "text", content: "그 순간, 당신 앞에 새로운 선택지가 나타났다." },
     {
       type: "choice", choices: [
-        { text: "동료를 구한다", result: "당신은 동료를 구하고 신뢰를 얻었다." },
+        { text: "동료를 구한다", result: "당신도 죽고 동료도 죽었다." },
         { text: "혼자 도망간다", result: "당신은 살아남았지만 죄책감에 시달린다." }
       ]
     },
@@ -95,6 +95,5 @@ function nextStory() {
 }
 
 function goHome() {
-  document.getElementById("story-screen").classList.add("hidden");
-  document.getElementById("start-screen").classList.remove("hidden");
+  location.reload(); // 초기화
 }

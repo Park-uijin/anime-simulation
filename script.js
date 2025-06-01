@@ -56,7 +56,7 @@ function selectStory(storyKey) {
 function displayStep() {
   const step = currentStory[currentStep];
   const storyBox = document.getElementById("story-box");
-  const choiceBox = document.getElementById("choice-buttons");
+  const choiceBox = document.getElementById("choices-container"); // ✅ 여기서 변수명 확인!
   const nextBtn = document.getElementById("next-button");
 
   choiceBox.innerHTML = "";
@@ -72,16 +72,16 @@ function displayStep() {
     storyBox.innerText = step.content;
     nextBtn.style.display = "block";
   } else if (step.type === "choice") {
-    storyBox.innerText = "선택하세요:";
     step.choices.forEach(choice => {
       const btn = document.createElement("button");
       btn.textContent = choice.text;
       btn.onclick = () => {
         storyBox.innerText = choice.result;
         nextBtn.style.display = "block";
-        choiceBox.classList.add("hidden");
+        choiceBox.classList.add("hidden"); // ✅ 변수명 수정!
+        currentStep++;
 
-        // 동료를 구하는 선택 시 즉시 엔딩으로 이동
+        // "동료를 구한다" 선택 시 즉시 엔딩으로 이동
         if (choice.text === "동료를 구한다") {
           document.getElementById("story-screen").classList.add("hidden");
           document.getElementById("ending-screen").classList.remove("hidden");
@@ -91,8 +91,11 @@ function displayStep() {
       };
       choiceBox.appendChild(btn);
     });
+
+    // 기존 메시지 박스를 비워주고, 선택지만 출력하도록 수정
     choiceBox.classList.remove("hidden");
     nextBtn.style.display = "none";
+    storyBox.innerText = ""; // ✅ "선택하세요" 제거
   }
 }
 

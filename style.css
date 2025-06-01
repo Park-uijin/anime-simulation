@@ -35,6 +35,19 @@ body {
   transform: scale(1.05);
 }
 
+#choices-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 33vh; /* 선택지가 화면의 1/3을 차지 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* 공통 화면 스타일 */
 .screen {
   display: flex;

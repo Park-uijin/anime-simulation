@@ -114,8 +114,8 @@ button:hover {
 /* 시작 버튼 위치 조정 */
 .start-button {
   position: absolute;
-  bottom: 60px;
-  right: 20px;
+  bottom: 30px;
+  right: 70px;
   /* 오버레이보다 위로 올라오도록 z-index 지정 */
   z-index: 20;
   pointer-events: auto;

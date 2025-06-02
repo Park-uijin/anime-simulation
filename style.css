@@ -1,4 +1,4 @@
-/* 기본 설정 */
+/* ─── 기본 설정 ───────────────────────────────────────────────────── */
 html, body {
   margin: 0;
   padding: 0;
@@ -26,13 +26,32 @@ html, body {
   display: none;
 }
 
-/* 시작 화면과 엔딩 화면은 뷰포트 전체 높이(100vh)로 고정하고, 넘치는 부분은 숨김 */
+/* ─── 시작 화면·엔딩 화면 고정(스크롤 방지) ────────────────────────── */
 #start-screen,
 #ending-screen {
-  height: 100vh;       /* 브라우저 창 높이 100% */
-  overflow: hidden;    /* 내용이 100vh를 넘어가면 숨기기 */
-  /* (pointer-events: none 등을 추가하면 콘텐츠 클릭도 막지만, 여기선 필요 없습니다) */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 10;
 }
+
+/* ─── 스토리 화면: 다음/이전 버튼 위치 고정 ────────────────────────── */
+#story-screen #next-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+#story-screen #before-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+/* ───────────────────────────────────────────────────────────────────── */
 
 /* 제목 */
 .title {
@@ -94,12 +113,7 @@ button:hover {
   margin-bottom: 20px;
 }
 
-/* 이전/다음 버튼 */
-#next-button, #before-button {
-  margin: 10px;
-}
-
-/* 처음으로 버튼 (좌측 하단 고정) */
+/* “처음으로” 버튼 (좌측 하단 고정) */
 .home-button {
   position: absolute;
   bottom: 20px;
@@ -116,24 +130,12 @@ button:hover {
   opacity: 1;
 }
 
-/*시작 화면*/
+/* 시작 화면 배경 이미지 (GitHub Raw URL 예시) */
 #start-screen {
-  background-image: url('./assets/start-bg.jpg'); /* 👉 원하는 이미지 경로로 수정 */
+  background-image: url('https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/assets/start-bg.jpg');
   background-size: cover;
   background-position: center;
-}
-
-/* 엔딩 화면 */
-#ending-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-#ending-screen button {
-  margin-top: 20px;
+  background-repeat: no-repeat;
 }
 
 /* 반응형 설정 */

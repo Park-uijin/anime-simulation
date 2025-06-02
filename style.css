@@ -87,7 +87,7 @@ html, body {
   justify-content: center; /* 두 줄 텍스트를 세로 중앙 정렬 */
   align-items: center;
   font-size: 15vh;
-  color: #c0c0c0;
+  color: #F8F8F8;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
   margin-bottom: 20px;
 }
@@ -115,7 +115,7 @@ button:hover {
 .start-button {
   position: absolute;
   top: 20px;     /* 위에서 20px 내려온 위치 */
-  right: 20px;   /* 오른쪽에서 20px 들어온 위치 */
+  right: 40px;   /* 오른쪽에서 20px 들어온 위치 */
   z-index: 20;
   pointer-events: auto;
 }

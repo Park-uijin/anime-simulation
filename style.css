@@ -1,13 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto+Condensed:wght@400;700&display=swap');
+
 /* ─── 기본 설정 ───────────────────────────────────────────────────── */
 html, body {
   margin: 0;
   padding: 0;
-  font-family: 'Courier New', monospace;
   background-color: black;
-  color: white;
+  background-size: cover;
+  background-position: center;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  font-family: 'Roboto Condensed', sans-serif;
+  color: #f0f0f0; /* 텍스트는 진한 흰색 */
+}
+
+/* 스크롤바 커스터마이즈 (선택 사항) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 5px;
+  border: 2px solid #2a2a2a;
 }
 
 /* 공통 화면 스타일 */
@@ -20,6 +37,7 @@ html, body {
   height: 100%;
   position: relative;
   text-align: center;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .hidden {
@@ -55,7 +73,10 @@ html, body {
 
 /* 제목 */
 .title {
+  font-family: 'Russo One', sans-serif;
   font-size: 3rem;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
   margin-bottom: 20px;
 }
 
@@ -100,17 +121,30 @@ button:hover {
 
 /* 스토리 박스 */
 .story-box {
-  width: 100%;
+  width: 90%;
   max-width: 700px;
-  min-height: 100px;
+  min-height: 120px;
   padding: 20px;
-  background-color: #111;
-  border: 2px solid #555;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  text-align: left;
-  white-space: pre-wrap;
+  background-color: rgba(30, 30, 30, 0.8);
+
+  border: 2px solid rgba(200, 200, 200, 0.3);
+  border-radius: 4px;
+
+  /* 텍스트는 진한 흰색으로 가독성 확보 */
+  color: #f0f0f0;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: 'Roboto Condensed', sans-serif;
+
+  box-shadow:
+    inset 0 0 8px rgba(0,0,0,0.8),
+    0 0 12px rgba(0,0,0,0.5);
+  margin-top: 100px;  /* 이 값을 조절해 높이를 변경하세요 */
   margin-bottom: 20px;
+
+  white-space: pre-wrap;
+  text-align: left;
+}
 }
 
 /* “처음으로” 버튼 (좌측 하단 고정) */
@@ -132,7 +166,7 @@ button:hover {
 
 /* 시작 화면 배경 이미지 (GitHub Raw URL 예시) */
 #start-screen {
-  background-image: url('https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTZfMjA4/MDAxNjA4MTIyOTYyMjY2.qs1p1Zrw3Ngy1h1CDRGnc0wNw3Z3pk7haOUcsI1QF7Ug.i-HnxF6YMIcw58rTJUWT8qdZ7cnejpfLVWyEJFwff9sg.JPEG.gootg/Attack-on-Titan-Thumbnail.jpg');
+  background-image: url(https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/start-bg.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

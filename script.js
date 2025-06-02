@@ -6,6 +6,17 @@ let currentStory = [];     // 현재 화면에 보여주는 스토리 배열
 let currentKey = "";       // 현재 사용 중인 스토리 키 (예: "attack_root", "attack_run" 등)
 let selectedCharacter = "";// 플레이어 이름 (필요할 경우 사용)
 
+const bgMap = {
+  default: 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/start-bg.jpg',
+  attack_fight: 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/fight-bg.jpg'.jpg',
+  attack_run: 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/root-bg.jpg'.jpg',
+  attack_test: 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/test-bg.jpg'.jpg',
+  attack_get: 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/get-bg.jpg'.jpg',
+  attack_out: 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/out-bg.jpg'.jpg',
+  attack_in: 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/in-bg.jpg'.jpg'
+};
+
+
 // ─── 스토리 데이터 정의 ────────────────────────────────────────────
 const stories = {
   attack_root: [
@@ -89,6 +100,7 @@ const stories = {
   ],
   // (6) "조사병단에 입단"
   attack_out: [
+    { type: "text", content: "당신은 조사병단에 입단해 힘겨운 임무를 수행한다." },
     { type: "text", content: "벽 밖을 처음 나가본다."},
     { type: "text", content: "세계의 비밀을 밝혀내야한다."},
     { 
@@ -104,8 +116,9 @@ const stories = {
   ], 
   //(7) "헌병단에 입단"
   attack_in: [
-    { type: "text", content: "다른 병단에 비해 일이 쉽다."},
-    { type: "text", content: "술을 너무 마셔서 거인이 되었다."}
+    { type: "text", content: "당신은 헌병단에 입단해 왕을 호위하게 되었다." },
+    { type: "text", content: "다른 병단에 비해 하는 게 별로 없다."},
+    { type: "text", content: "그로 인해 술을 너무 마셔서 거인이 되었다."}
   ],
   //(8) "숨겨진 비밀이 있는 지하실로 간다."
   attack_plan: [ ]  
@@ -134,6 +147,8 @@ function startStory() {
   // 루트 스토리(attack_root) 로드
   currentKey = "attack_root";
   currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
+
+  document.body.style.backgroundImage = `url('${bgMap.default}')`;
 
   // 플레이어 이름 반영 구문이 있다면(예: stories의 텍스트 안에 ${selectedCharacter} 등),
   // 현재 예시에는 ‘거인이 ’ 뒤에 이름을 넣고 싶다면 아래처럼 조정할 수도 있습니다.
@@ -198,8 +213,11 @@ function displayStep() {
       btn.style.fontSize = "1.1rem";
       btn.style.padding = "12px 0";
 
-      btn.onclick = () => {
-        // 1) 결과 메시지를 먼저 보여주기
+     btn.onclick = () => {
+        // 1) 배경 먼저 변경 (nextKey가 정의되어 있을 때만)
+        if (choice.nextKey && bgMap[choice.nextKey]) {
+          document.body.style.backgroundImage = `url('${bgMap[choice.nextKey]}')`;
+        }
         storyBox.style.display = "block";
         storyBox.innerText = choice.result;
 

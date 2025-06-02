@@ -141,6 +141,7 @@ function startStory() {
     alert("이름을 입력하세요.");
     return;
   }
+  alert("입력된 이름: " + nameInput);
   selectedCharacter = nameInput;
 
   // 루트 스토리(attack_root) 로드
@@ -220,7 +221,7 @@ function displayStep() {
         storyBox.style.display = "block";
         storyBox.innerText = choice.result;
 
-        // 2) 1.5초 뒤에 분기 처리
+        // 2) 3초 뒤에 분기 처리
         setTimeout(() => {
           // nextKey가 없으면(=null) → 기존 스토리에서 다음 스텝으로 넘어가기
           if (!choice.nextKey) {
@@ -234,7 +235,7 @@ function displayStep() {
           currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
           currentStep = 0;
           displayStep();
-        }, 1500);
+        }, 3000);
       };
 
       choiceBox.appendChild(btn);

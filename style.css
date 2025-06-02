@@ -132,7 +132,7 @@ button:hover {
 
 /* 시작 화면 배경 이미지 (GitHub Raw URL 예시) */
 #start-screen {
-  background-image: url('https://i.pinimg.com/736x/2f/91/16/2f9116216225d1ebe67958d19705c130.jpg');
+  background-image: url(https://mblogthumb-phinf.pstatic.net/MjAyMDEyMTZfMjA4/MDAxNjA4MTIyOTYyMjY2.qs1p1Zrw3Ngy1h1CDRGnc0wNw3Z3pk7haOUcsI1QF7Ug.i-HnxF6YMIcw58rTJUWT8qdZ7cnejpfLVWyEJFwff9sg.JPEG.gootg/Attack-on-Titan-Thumbnail.jpg?type=w800);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

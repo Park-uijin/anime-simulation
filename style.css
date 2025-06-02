@@ -132,7 +132,7 @@ button:hover {
 
 /* 시작 화면 배경 이미지 (GitHub Raw URL 예시) */
 #start-screen {
-  background-image: url('https://raw.githubusercontent.com/Park-uijin.github.io/anime-simulation/main/assets/start-bg.jpg');
+  background-image: url('https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/assets/start-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

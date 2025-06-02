@@ -19,30 +19,48 @@ const stories = {
       ]
     },
     { type: "text", content: "당신의 여정은 이제 시작이다." }
-  ],
- 
+  ]
+};
+
+// 게임 시작
 function startGame() {
   document.getElementById("start-screen").classList.add("hidden");
-  document.getElementById("choice-screen").classList.remove("hidden");
-  currentStory = stories['attack']; // 진격의 거인 스토리 자동 설정
-  currentStep = 0;
-  displayStep();
-
-}
-
-function selectCharacter(character) {
-  selectedCharacter = character; // 선택한 캐릭터 저장
-  document.getElementById("character-screen").classList.add("hidden");
   document.getElementById("story-screen").classList.remove("hidden");
-  currentStory = stories['attack']; // ✅ 선택 없이 바로 '진격의 거인' 진행
+  currentStory = stories["attack"]; // 스토리 고정
   currentStep = 0;
   displayStep();
 }
 
+// 시작 화면 → 이름 입력 화면으로 전환
+function goToNameInput() {
+  document.getElementById("start-screen").classList.add("hidden");
+  document.getElementById("name-screen").classList.remove("hidden");
+}
+
+// 이름 입력 후 → 스토리 시작
+function startStory() {
+  const name = document.getElementById("player-name").value.trim();
+  if (!name) {
+    alert("이름을 입력하세요.");
+    return;
+  }
+
+  selectedCharacter = name; // 이름을 selectedCharacter 변수에 저장
+  currentStory = stories['에렌']; // 예시로 기본 스토리를 연결
+  currentStep = 0;
+
+  document.getElementById("name-screen").classList.add("hidden");
+  document.getElementById("story-screen").classList.remove("hidden");
+
+  displayStep();
+}
+
+
+// 스토리 출력
 function displayStep() {
   const step = currentStory[currentStep];
   const storyBox = document.getElementById("story-box");
-  const choiceBox = document.getElementById("choices-container");
+  const choiceBox = document.getElementById("choice-buttons");
   const nextBtn = document.getElementById("next-button");
 
   choiceBox.innerHTML = "";
@@ -61,11 +79,11 @@ function displayStep() {
     step.choices.forEach(choice => {
       const btn = document.createElement("button");
       btn.textContent = choice.text;
+      btn.className = "button"; // 공통 버튼 스타일 적용
       btn.onclick = () => {
         storyBox.innerText = choice.result;
         nextBtn.style.display = "block";
-        
-        choiceBox.classList.add("hidden"); // ✅ 선택 후 버튼 숨김
+        choiceBox.classList.add("hidden");
         currentStep++;
 
         if (choice.text === "동료를 구한다") {
@@ -78,15 +96,25 @@ function displayStep() {
 
     choiceBox.classList.remove("hidden");
     nextBtn.style.display = "none";
-    storyBox.innerText = ""; // "선택하세요" 제거
+    storyBox.innerText = ""; // 선택 안내 메시지 제거
   }
 }
 
+// 다음 스텝으로 이동
 function nextStory() {
   currentStep++;
   displayStep();
 }
 
+// 이전 스텝 (옵션)
+function beforeStory() {
+  if (currentStep > 0) {
+    currentStep--;
+    displayStep();
+  }
+}
+
+// 처음으로
 function goHome() {
-  location.reload(); // 초기화
+  location.reload(); // 페이지 새로고침
 }

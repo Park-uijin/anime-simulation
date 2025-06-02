@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>애니시</title>
+  <title>진격의 거인 시뮬레이션</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <!-- 시작 화면 -->
-<div id="start-screen" class="screen">
-  <h1 class="title">진격의 거인 시뮬레이션</h1>
-  <button id="start-button" class="start-button" onclick="startGame()">시작하기</button>
-</div>
+  <div id="start-screen" class="screen">
+    <h1 class="title">진격의 거인 시뮬레이션</h1>
+    <button class="start-button" onclick="goToNameInput()">시작하기</button>
+  </div>
 
   <!-- 스토리 화면 -->
   <div id="story-screen" class="screen hidden">
@@ -29,8 +30,14 @@
     <button onclick="goHome()">처음으로 돌아가기</button>
   </div>
 
-  <!-- 선택지 버튼이 따로 표시될 컨테이너 -->
-  <div id="choices-container" class="hidden"></div>
+  <!-- 이름 입력 화면 -->
+  <div id="name-screen" class="screen hidden">
+    <h2>당신의 이름을 입력하세요</h2>
+    <input type="text" id="player-name" placeholder="이름 입력" />
+    <button onclick="startStory()">확인</button>
+   <button class="home-button" onclick="goHome()">← 처음으로</button>
+  </div>
+
 
   <script src="script.js"></script>
 </body>

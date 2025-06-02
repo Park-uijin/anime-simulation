@@ -45,15 +45,18 @@ function startStory() {
     return;
   }
 
-  selectedCharacter = name; // 이름을 selectedCharacter 변수에 저장
-  currentStory = stories['에렌']; // 예시로 기본 스토리를 연결
-  currentStep = 0;
+  selectedCharacter = name;
+  currentStory = stories["attack"]; // 스토리 유지
 
+  // 이름을 반영하여 스토리 시작 메시지 변경
+  story[0].content = `웰컴, ${selectedCharacter}! 당신은 조사병단 훈련병으로 입단했다.`;
+
+  // 게임 화면 전환
   document.getElementById("name-screen").classList.add("hidden");
   document.getElementById("story-screen").classList.remove("hidden");
 
   displayStep();
-}
+ }
 
 
 // 스토리 출력
@@ -81,14 +84,21 @@ function displayStep() {
       btn.textContent = choice.text;
       btn.className = "button"; // 공통 버튼 스타일 적용
       btn.onclick = () => {
-        storyBox.innerText = choice.result;
-        nextBtn.style.display = "block";
-        choiceBox.classList.add("hidden");
-        currentStep++;
+          storyBox.innerText = choice.result;
+          currentStep++;
+    
+          setTimeout(() => {
+              displayStep(); // 1.5초 후 자동 진행
+          }, 1500);
+
 
         if (choice.text === "동료를 구한다") {
-          document.getElementById("story-screen").classList.add("hidden");
-          document.getElementById("ending-screen").classList.remove("hidden");
+            storyBox.innerText = choice.result;
+
+            setTimeout(() => {
+                document.getElementById("story-screen").classList.add("hidden");
+                ocument.getElementById("ending-screen").classList.remove("hidden");
+            }, 2000); // 2초 후 게임 오버 화면 전환
         }
       };
       choiceBox.appendChild(btn);

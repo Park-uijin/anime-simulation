@@ -110,7 +110,7 @@ button:hover {
 
 /*시작 화면*/
 #start-screen {
-  background-image: url('images/start-bg.jpg'); /* 👉 원하는 이미지 경로로 수정 */
+  background-image: url('https://i.pinimg.com/736x/67/b6/90/67b690140f09b858dd942c7a35e434e2.jpg'); /* 👉 원하는 이미지 경로로 수정 */
   background-size: cover;
   background-position: center;
 }

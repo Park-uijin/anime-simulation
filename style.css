@@ -115,7 +115,7 @@ button:hover {
 .start-button {
   position: absolute;
   top: 20px;     /* 위에서 20px 내려온 위치 */
-  right: 60px;   /* 오른쪽에서 20px 들어온 위치 */
+  right: 90px;   /* 오른쪽에서 20px 들어온 위치 */
   z-index: 20;
   pointer-events: auto;
 }

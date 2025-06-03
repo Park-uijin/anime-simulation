@@ -16,11 +16,7 @@ html, body {
 }
 
 body {
-  background-color: #111; /* 어두운 배경 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background-color: #111; /* 어두운 배경 */ 
 }
 
 .bold-text {
@@ -76,10 +72,10 @@ body {
   align-items: center;
   padding: 40px;
   height: 100%;
+  width: 100%;          /* ← 추가: 화면 너비를 100%로 채우기 */
   position: relative;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.7);
-  /* 클릭이 오버레이로 막히는 경우 대비 */
   
 }
 /* .screen 자체는 클릭을 무시하지만, 

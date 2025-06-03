@@ -368,6 +368,6 @@ function beforeStory() {
 function goHome() {
   location.reload();
 }
-
+}
   
 // ────────────────────────────────────────────────────────────────────

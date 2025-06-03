@@ -15,10 +15,6 @@ html, body {
   box-sizing: border-box;
 }
 
-body {
-  background-color: #111; /* 어두운 배경 */ 
-}
-
 .bold-text {
   font-weight: bold;
 }
@@ -357,6 +353,7 @@ button:hover {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: transparent;
 }
 
 /* 반응형 설정 */

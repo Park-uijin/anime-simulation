@@ -13,14 +13,15 @@ const bgMap = {
   attack_test:  'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/test-bg.jpg',
   attack_get:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/get-bg.jpg',
   attack_out:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/out-bg.jpg',
-  attack_in:    'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/in-bg.jpg'
+  attack_in:    'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/in-bg.jpg',
+  attack_plan:  'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/plan-bg.jpg'
 };
 
 // ─── 스토리 데이터 정의 ────────────────────────────────────────────
 const stories = {
   attack_root: [
     { type: "text", content: "눈을 뜨니 세상이 빨갛다." },
-    { type: "text", content: "거인이 침입해 벽이 무너졌고, 이제 선택이 필요하다." },
+    { type: "text", content: "거인이 침입해 문이 뚫렸고, 이제 선택이 필요하다." },
     {
       type: "choice",
       choices: [
@@ -45,13 +46,13 @@ const stories = {
     { type: "text", content: "나아갔지만 공포에 사로잡혀 몸이 움직이지 않는다." },
     { type: "text", content: "거인이 기괴하게 다가오고 있다." },
     { type: "text", content: ".........." },
-    { type: "text", content: "붉은 피가 흩어지며 당신은 그 자리에서 먹혔다. 당신은 사망했다." }
+    { type: "text", content: "붉은 피가 흩어지며 ${selectedCharacter}은 그 자리에서 먹혔다. 사망했다." }
     // 배열 끝〈여기까지〉 → displayStep()에서 step이 undefined가 되어 엔딩 화면으로 이동
   ],
 
   // (3) “도망친다” 분기 등 다른 분기는 그대로 두거나 필요에 따라 수정
   attack_run: [
-    { type: "text", content: "당신은 필사적으로 도망쳤다," },
+    { type: "text", content: "${selectedCharacter}은 필사적으로 도망쳤다," },
     { type: "text", content: "뒤에서 비명과 울음이 뒤섞인 소리가 난다…" },
     { type: "text", content: "다행히 배에 탑승해 월 로제에 도착했다." },
     {
@@ -63,8 +64,8 @@ const stories = {
           nextKey: "attack_test"
         },
         {
-          text: "식량을 구하러 간다.",
-          result: "식량난을 해소하기 위해 월 로제를 나간다.",
+          text: "식량난 해결을 위해 전쟁에 간다.",
+          result: "월 로제를 나가게 되었다.",
           nextKey: "attack_get"
         }
       ]
@@ -74,7 +75,7 @@ const stories = {
   attack_test: [
     { type: "text", content: "훈련이 생각한 것보다 더 힘들다."},
     { type: "text", content: "이렇게 저렇게 하다보니 살아남았다."},
-    { type: "text", content: "주인공들과 대화해보니 에렌보단 장이 더 좋다."},
+    { type: "text", content: "동료들과 유대를 쌓았다. 장과 친해졌다."},
     { type: "text", content: "......<몇 년 후>"},
     { type: "text", content: "드디어 훈련이 끝났다."},
     { 
@@ -93,13 +94,13 @@ const stories = {
       ]
     }    
   ], 
-  // (5) "식량을 구하러 간다."
+  // (5) " 식량 전쟁에 참여한다."
   attack_get: [
-    { type: "text", content: "안전한 월 로제에서 벗어났으므로 당신은 사망했다." }
+    { type: "text", content: "안전한 월 로제에서 벗어났으므로 ${selectedCharacter}은 사망했다." }
   ],
   // (6) "조사병단에 입단"
   attack_out: [
-    { type: "text", content: "당신은 조사병단에 입단해 힘겨운 임무를 수행한다." },
+    { type: "text", content: "${selectedCharacter}은 조사병단에 입단해 힘겨운 임무를 수행한다." },
     { type: "text", content: "벽 밖을 처음 나가본다."},
     { type: "text", content: "세계의 비밀을 밝혀내야한다."},
     { 
@@ -107,7 +108,7 @@ const stories = {
       choices: [
         {
           text: "숨겨진 비밀이 있는 지하실로 간다.",
-          result: "거인과 싸울 계획을 세운다.",
+          result: "내려간다.",
           nextKey: "attack_plan"
         }
       ]
@@ -115,18 +116,35 @@ const stories = {
   ], 
   //(7) "헌병단에 입단"
   attack_in: [
-    { type: "text", content: "당신은 헌병단에 입단해 왕을 호위하게 되었다." },
+    { type: "text", content: "${selectedCharacter}은 헌병단에 입단해 왕을 호위하게 되었다." },
     { type: "text", content: "다른 병단에 비해 하는 게 별로 없다."},
     { type: "text", content: "그로 인해 술을 너무 마셔서 거인이 되었다."}
   ],
   //(8) "숨겨진 비밀이 있는 지하실로 간다."
-  attack_plan: [ ]  
+  attack_plan: [
+    { type: "text", content: "지하실을 둘러봤다." },
+    { type: "text", content: "잠겨진 서랍을 발견했다." },
+    { type: "text", content: "서랍을 뿌셔서 의문의 책을 발견했다." },
+    { type: "text", content: "세계의 진실이 담겨있다." },
+  ]
 };
 
-// ────────────────────────────────────────────────────────────────────
+// ─── 게임 흐름 함수 정의 
+────────────────────────────────────────────
 
+function showBookAnimation() {
+  // book.png는 프로젝트에 반드시 존재해야 합니다. 혹은 URL을 넣어주세요.
+  const img = document.createElement("img");
+  img.src = 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/book.png'; 
+  img.alt = "의문의 책";
+  img.className = "book-image";
+  document.body.appendChild(img);
 
-// ─── 게임 흐름 함수 정의 ────────────────────────────────────────────
+  // 3초 뒤에 자동으로 책 이미지 제거 (필요에 따라 시간 조정)
+  setTimeout(() => {
+    img.remove();
+  }, 3000);
+}
 
 // 시작 화면 → 이름 입력 화면으로 전환
 function goToNameInput() {
@@ -169,6 +187,10 @@ function displayStep() {
   const choiceBox = document.getElementById("choice-buttons");
   const nextBtn = document.getElementById("next-button");
   const beforeBtn = document.getElementById("before-button");
+  const endingScreen = document.getElementById("ending-screen");
+  const customEnding = document.getElementById("custom-ending");
+
+  customEnding.classList.add("hidden");
 
   // 1) 선택지 영역 초기화
   choiceBox.innerHTML = "";
@@ -182,6 +204,22 @@ function displayStep() {
   }
 
   // 3) 스텝 타입에 따라 분리
+  if (!step) {
+    // “숨겨진 비밀이 있는 지하실” 분기에서 custom ending 출력
+    if (currentKey === "attack_plan") {
+      // 스토리 화면 완전히 숨기기
+      document.getElementById("story-screen").classList.add("hidden");
+      // 커스텀 엔딩 텍스트 삽입 및 표시
+      customEnding.textContent = "진실은 애니를 통해 확인하세요";
+      customEnding.classList.remove("hidden");
+    } else {
+      // 기본 엔딩 화면
+      document.getElementById("story-screen").classList.add("hidden");
+      endingScreen.classList.remove("hidden");
+    }
+    return;
+  }  
+
   if (step.type === "text") {
     // ── 텍스트 스텝 ──────────────────────────────────────
     storyBox.style.display = "block";
@@ -197,6 +235,13 @@ function displayStep() {
     // “다음” 버튼만 표시 (“이전” 버튼은 currentStep > 0일 때만)
     nextBtn.style.display = "inline-block";
     beforeBtn.style.display = currentStep > 0 ? "inline-block" : "none";
+
+    if (
+      currentKey === "attack_plan" &&
+      step.content.includes("의문의 책을 발견했다")
+    ) {
+      showBookAnimation();
+    }
   }
   else if (step.type === "choice") {
     // ── 선택지 스텝 ──────────────────────────────────────
@@ -220,8 +265,12 @@ function displayStep() {
         }
         storyBox.style.display = "block";
         storyBox.innerText = choice.result;
+        
+        // 2) result 텍스트만 굵게 표시
+        storyBox.style.display = "block";
+        storyBox.innerHTML = `<span class="bold-text">${choice.result}</span>`;
 
-        // 2) 3초 뒤에 분기 처리
+        // 3) 3초 뒤에 분기 처리
         setTimeout(() => {
           // nextKey가 없으면(=null) → 기존 스토리에서 다음 스텝으로 넘어가기
           if (!choice.nextKey) {
@@ -235,7 +284,7 @@ function displayStep() {
           currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
           currentStep = 0;
           displayStep();
-        }, 3000);
+        }, 4000);
       };
 
       choiceBox.appendChild(btn);

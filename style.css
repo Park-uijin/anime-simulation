@@ -187,7 +187,7 @@ button:hover {
   background-position: center;
   background-repeat: no-repeat;
 
-  
+  background-color: transparent;  
 }
 
 /* 반응형 설정 */

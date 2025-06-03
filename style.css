@@ -190,7 +190,6 @@ body {
   font-size: 3rem;                     /* 원래 제목보다 살짝 작게 */
   color: #ffffff;                      /* 흰색 텍스트 */
   text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-
   margin-bottom: 30px;                 /* 아래 여백 넉넉히 */
 }
 

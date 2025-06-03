@@ -280,10 +280,19 @@ button:hover {
 /* 시작 버튼 위치 조정 */
 .start-button {
   position: absolute;
-  top: 20px;     /* 위에서 20px 내려온 위치 */
-  right: 90px;   /* 오른쪽에서 20px 들어온 위치 */
-  z-index: 20;
-  pointer-events: auto;
+  top: 20px;
+  right: 20px;
+  z-index: 999;  /* 충분히 높은 값으로, 버튼이 어떤 레이어 위에도 가장 위에 뜨도록 */
+  background-color: rgba(255,255,255,0.3);
+  color: #000;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.start-button:hover {
+  background-color: rgba(255,255,255,0.5);
 }
 
 /* 선택지 버튼 그룹 */

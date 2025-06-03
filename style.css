@@ -12,7 +12,40 @@ html, body {
   overflow-y: auto;
   font-family: 'Roboto Condensed', sans-serif;
   color: #f0f0f0; /* 텍스트는 진한 흰색 */
+  box-sizing: border-box;
 }
+
+.bold-text {
+  font-weight: bold;
+}
+
+.book-image {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 200px;               /* 필요에 따라 크기를 조절하세요 */
+  height: auto;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 50;
+  animation: bookPop 1s forwards;
+}
+
+@keyframes bookPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.0);
+    opacity: 1;
+  }
+}
+
 
 /* 스크롤바 커스터마이즈 (선택 사항) */
 ::-webkit-scrollbar {
@@ -35,10 +68,9 @@ html, body {
   align-items: center;
   padding: 40px;
   height: 100%;
+  width: 100%;          /* ← 추가: 화면 너비를 100%로 채우기 */
   position: relative;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  /* 클릭이 오버레이로 막히는 경우 대비 */
   
 }
 /* .screen 자체는 클릭을 무시하지만, 
@@ -61,6 +93,140 @@ html, body {
   z-index: 10;
   /* 내부 버튼 클릭이 가능하도록 pointer-events 설정 */
   pointer-events: auto;
+}
+
+#custom-ending {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100; /* 게임 오버 화면보다 위에 뜨도록 높은 z-index */
+  color: #f0f0f0;
+  font-size: 2rem;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ─── 이름 입력 화면 테마 ───────────────────────────────────────── */
+
+/* 1. #name-screen 전체에 배경 이미지 추가 */
+#name-screen {
+  background-image: url('https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/name-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* 기존 .screen의 반투명 오버레이를 남기고 싶으면 아래 남기고, 
+     완전히 덮어씌우려면 background-color 삭제 */
+  background-color: rgba(0, 0, 0, 0.6);
+
+  /* name-screen도 화면 전체를 덮도록 보장 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+
+/* 2. 제목(h2) 스타일 조정 */
+#name-screen h2 {
+  font-family: 'Exo 2', sans-serif;   /* 제목용 폰트 (둥글면서 날카로운) */
+  font-size: 3rem;                     /* 원래 제목보다 살짝 작게 */
+  color: #ffffff;                      /* 흰색 텍스트 */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  margin-bottom: 30px;                 /* 아래 여백 넉넉히 */
+}
+
+/* 3. 입력창(input) 박스 키우기 */
+#name-screen input#player-name {
+  width: 80%;                          /* 화면 너비의 80% 차지 */
+  max-width: 500px;                    /* 최대 500px */
+  padding: 15px 20px;                  /* 안쪽 여백 크게 */
+  font-size: 1.2rem;                   /* 큰 글자 */
+  font-family: 'Roboto Condensed', sans-serif;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);  /* 반투명 흰색 배경 */
+  color: #ffffff;                      /* 입력 텍스트는 흰색 */
+  margin-bottom: 20px;                 /* 아래 여백 */
+  outline: none;
+}
+
+/* 포커스 시 강조 */
+#name-screen input#player-name:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: #ffffff;
+  box-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+/* 4. 확인 버튼 스타일 조정 */
+#name-screen button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  font-family: 'Roboto Condensed', sans-serif;
+  cursor: pointer;
+  margin: 5px;                         /* 버튼 간 여백 */
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#name-screen button:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+/* 5. '확인' 버튼과 '처음으로' 버튼 구분 */
+#name-screen button[onclick="startStory()"] {
+  /* 확인 버튼은 좀 더 눈에 띄게 */
+  background-color: rgba(0, 150, 136, 0.8); /* 예: 청록색 계열 */
+  border: 2px solid rgba(0,150,136,0.9);
+}
+#name-screen button[onclick="startStory()"]:hover {
+  background-color: rgba(0, 150, 136, 1);
+}
+
+#name-screen .home-button {
+  background-color: rgba(200, 200, 200, 0.2); /* ‘처음으로’ 버튼은 그레이톤 */
+  border: 2px solid rgba(200,200,200,0.7);
+  color: #e0e0e0;
+}
+#name-screen .home-button:hover {
+  background-color: rgba(200, 200, 200, 0.4);
+}
+
+/* 6. 반응형: 화면 작아질 때 크기 조정 */
+@media (max-width: 600px) {
+  #name-screen h2 {
+    font-size: 2.2rem;
+  }
+  #name-screen input#player-name {
+    width: 90%;
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+  #name-screen button {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+  #custom-ending {
+    font-size: 1.5rem;
+  }
 }
 
 /* ─── 스토리 화면: 다음/이전 버튼 위치 고정 ────────────────────────── */
@@ -155,7 +321,7 @@ button:hover {
     0 0 12px rgba(0,0,0,0.5);
 
   /* 아래로 내리기 위한 여백 추가 */
-  margin-top: 100px;  /* 이 값을 조절해 높이를 변경하세요 */
+  margin-top: 80px;  /* 이 값을 조절해 높이를 변경하세요 */
   margin-bottom: 20px;
 
   white-space: pre-wrap;
@@ -186,7 +352,6 @@ button:hover {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   background-color: transparent;
 }
 

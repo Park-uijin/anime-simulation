@@ -9,8 +9,9 @@ let selectedCharacter = ""; // 플레이어 이름
 // 배경 맵 (분기별 배경 이미지 경로)
 const bgMap = {
   default:      'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/start-bg.jpg',
+  attack_root:  'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/root-bg.jpg',
   attack_fight: 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/fight-bg.jpg',
-  attack_run:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/root-bg.jpg',
+  attack_run:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/fight-bg.jpg',
   attack_test:  'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/test-bg.jpg',
   attack_get:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/get-bg.jpg',
   attack_out:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/out-bg.jpg',

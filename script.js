@@ -3,11 +3,12 @@
 // 전역 변수 선언
 let currentStep = 0;       // 현재 스텝 인덱스
 let currentStory = [];     // 현재 화면에 보여주는 스토리 배열
-let currentKey = "";       // 현재 사용 중인 스토리 키 (예: "attack_root", "attack_run" 등)
-let selectedCharacter = "";// 플레이어 이름 (필요할 경우 사용)
+let currentKey = "";       // 현재 사용 중인 스토리 키
+let selectedCharacter = ""; // 플레이어 이름
 
+// 배경 맵 (분기별 배경 이미지 경로)
 const bgMap = {
-  default:    'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/start-bg.jpg',
+  default:      'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/start-bg.jpg',
   attack_fight: 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/fight-bg.jpg',
   attack_run:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/root-bg.jpg',
   attack_test:  'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/test-bg.jpg',
@@ -28,7 +29,7 @@ const stories = {
         {
           text: "싸운다",
           result: "당신은 무기를 들고 앞으로 나아갔다.",
-          nextKey: "attack_fight"   // <-- 이 분기로 넘어갑니다
+          nextKey: "attack_fight"
         },
         {
           text: "도망친다",
@@ -39,20 +40,15 @@ const stories = {
     }
   ],
 
-  // ――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // (2) “싸운다” 분기: choice 없이 순수 텍스트만 작성
   attack_fight: [
-    // 이곳에 텍스트만 넣으면, 배열이 끝나자마자 displayStep()에서 `step`이 undefined가 되어 엔딩 화면으로 넘어갑니다.
     { type: "text", content: "나아갔지만 공포에 사로잡혀 몸이 움직이지 않는다." },
     { type: "text", content: "거인이 기괴하게 다가오고 있다." },
     { type: "text", content: ".........." },
-    { type: "text", content: "붉은 피가 흩어지며 ${selectedCharacter}은 그 자리에서 먹혔다. 사망했다." }
-    // 배열 끝〈여기까지〉 → displayStep()에서 step이 undefined가 되어 엔딩 화면으로 이동
+    { type: "text", content: `${selectedCharacter}은 그 자리에서 거인의 핏방울에 물들었다. 사망했다.` }
   ],
 
-  // (3) “도망친다” 분기 등 다른 분기는 그대로 두거나 필요에 따라 수정
   attack_run: [
-    { type: "text", content: "${selectedCharacter}은 필사적으로 도망쳤다," },
+    { type: "text", content: `${selectedCharacter}은 필사적으로 도망쳤다.` },
     { type: "text", content: "뒤에서 비명과 울음이 뒤섞인 소리가 난다…" },
     { type: "text", content: "다행히 배에 탑승해 월 로제에 도착했다." },
     {
@@ -65,20 +61,20 @@ const stories = {
         },
         {
           text: "식량난 해결을 위해 전쟁에 간다.",
-          result: "월 로제를 나가게 되었다.",
+          result: `${selectedCharacter}은 월 로제를 나가 전쟁터로 향했다.`,
           nextKey: "attack_get"
         }
       ]
     }
   ],
-  // (4) "훈련병이 된다"
+
   attack_test: [
-    { type: "text", content: "훈련이 생각한 것보다 더 힘들다."},
-    { type: "text", content: "이렇게 저렇게 하다보니 살아남았다."},
-    { type: "text", content: "동료들과 유대를 쌓았다. 장과 친해졌다."},
-    { type: "text", content: "......<몇 년 후>"},
-    { type: "text", content: "드디어 훈련이 끝났다."},
-    { 
+    { type: "text", content: "훈련이 생각한 것보다 더 힘들다." },
+    { type: "text", content: "이렇게 저렇게 하다보니 살아남았다." },
+    { type: "text", content: "동료들과 유대를 쌓았다. 장과 친해졌다." },
+    { type: "text", content: "......<몇 년 후>" },
+    { type: "text", content: "드디어 훈련이 끝났다." },
+    {
       type: "choice",
       choices: [
         {
@@ -88,71 +84,68 @@ const stories = {
         },
         {
           text: "편한 헌병단에 입단한다.",
-          result: "왕을 호위하러 벽의 가장 안쪽으로 간다.",
+          result: `${selectedCharacter}은 왕을 호위하러 헌병단에 입단했다.`,
           nextKey: "attack_in"
         }
       ]
-    }    
-  ], 
-  // (5) " 식량 전쟁에 참여한다."
-  attack_get: [
-    { type: "text", content: "안전한 월 로제에서 벗어났으므로 ${selectedCharacter}은 사망했다." }
+    }
   ],
-  // (6) "조사병단에 입단"
+
+  attack_get: [
+    { type: "text", content: `안전한 월 로제에서 벗어났으므로 ${selectedCharacter}은 사망했다.` }
+  ],
+
   attack_out: [
-    { type: "text", content: "${selectedCharacter}은 조사병단에 입단해 힘겨운 임무를 수행한다." },
-    { type: "text", content: "벽 밖을 처음 나가본다."},
-    { type: "text", content: "세계의 비밀을 밝혀내야한다."},
-    { 
+    { type: "text", content: `${selectedCharacter}은 조사병단에 입단해 힘겨운 임무를 수행한다.` },
+    { type: "text", content: "벽 밖을 처음 나가본다." },
+    { type: "text", content: "세계의 비밀을 밝혀내야한다." },
+    {
       type: "choice",
       choices: [
         {
           text: "숨겨진 비밀이 있는 지하실로 간다.",
-          result: "내려간다.",
+          result: "지하실로 내려간다.",
           nextKey: "attack_plan"
         }
       ]
-    }    
-  ], 
-  //(7) "헌병단에 입단"
-  attack_in: [
-    { type: "text", content: "${selectedCharacter}은 헌병단에 입단해 왕을 호위하게 되었다." },
-    { type: "text", content: "다른 병단에 비해 하는 게 별로 없다."},
-    { type: "text", content: "그로 인해 술을 너무 마셔서 거인이 되었다."}
+    }
   ],
-  //(8) "숨겨진 비밀이 있는 지하실로 간다."
+
+  attack_in: [
+    { type: "text", content: `${selectedCharacter}은 헌병단에 입단해 왕을 호위하게 되었다.` },
+    { type: "text", content: "다른 병단에 비해 하는 게 별로 없다." },
+    { type: "text", content: "그로 인해 술을 너무 마셔서 거인이 되었다." }
+  ],
+
   attack_plan: [
     { type: "text", content: "지하실을 둘러봤다." },
     { type: "text", content: "잠겨진 서랍을 발견했다." },
     { type: "text", content: "서랍을 뿌셔서 의문의 책을 발견했다." },
-    { type: "text", content: "세계의 진실이 담겨있다." },
+    { type: "text", content: "세계의 진실이 담겨있다." }
   ]
 };
 
-// ─── 게임 흐름 함수 정의 
-────────────────────────────────────────────
-
+// ─── 책 이미지 애니메이션 함수 ────────────────────────────────────
 function showBookAnimation() {
-  // book.png는 프로젝트에 반드시 존재해야 합니다. 혹은 URL을 넣어주세요.
   const img = document.createElement("img");
-  img.src = 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/book.png'; 
+  img.src = 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/book.png';
   img.alt = "의문의 책";
   img.className = "book-image";
   document.body.appendChild(img);
 
-  // 3초 뒤에 자동으로 책 이미지 제거 (필요에 따라 시간 조정)
   setTimeout(() => {
     img.remove();
   }, 3000);
 }
 
-// 시작 화면 → 이름 입력 화면으로 전환
+// ─── 시작 화면 → 이름 입력 화면 전환 ─────────────────────────────────
 function goToNameInput() {
+  alert("goToNameInput 호출됨"); // 디버그용
   document.getElementById("start-screen").classList.add("hidden");
   document.getElementById("name-screen").classList.remove("hidden");
 }
 
-// 이름 입력 후 → 스토리 시작
+// ─── 이름 입력 후 스토리 시작 ────────────────────────────────────────
 function startStory() {
   const nameInput = document.getElementById("player-name").value.trim();
   if (!nameInput) {
@@ -162,17 +155,24 @@ function startStory() {
   alert("입력된 이름: " + nameInput);
   selectedCharacter = nameInput;
 
-  // 루트 스토리(attack_root) 로드
+  // 루트 스토리 로드
   currentKey = "attack_root";
   currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
 
+  // ${selectedCharacter} 치환
+  currentStory.forEach(step => {
+    if (step.type === "text") {
+      step.content = step.content.replace(/\$\{selectedCharacter\}/g, selectedCharacter);
+    } else if (step.type === "choice") {
+      step.choices.forEach(c => {
+        c.result = c.result.replace(/\$\{selectedCharacter\}/g, selectedCharacter);
+      });
+    }
+  });
+
+  // 배경 화면 변경
   document.body.style.backgroundImage = `url('${bgMap.default}')`;
 
-  // 플레이어 이름 반영 구문이 있다면(예: stories의 텍스트 안에 ${selectedCharacter} 등),
-  // 현재 예시에는 ‘거인이 ’ 뒤에 이름을 넣고 싶다면 아래처럼 조정할 수도 있습니다.
-  // (지금은 예시 텍스트가 Player 이름을 넣도록 설계되어 있진 않기 때문에 생략)
-
-  // 화면 전환: 이름 입력 화면 숨기고, 스토리 화면 보여주기
   document.getElementById("name-screen").classList.add("hidden");
   document.getElementById("story-screen").classList.remove("hidden");
 
@@ -180,62 +180,51 @@ function startStory() {
   displayStep();
 }
 
-// 스토리 한 스텝씩 화면에 그려주는 함수
+// ─── 스토리 한 스텝씩 렌더링 ────────────────────────────────────────
 function displayStep() {
   const step = currentStory[currentStep];
-  const storyBox = document.getElementById("story-box");
-  const choiceBox = document.getElementById("choice-buttons");
-  const nextBtn = document.getElementById("next-button");
-  const beforeBtn = document.getElementById("before-button");
-  const endingScreen = document.getElementById("ending-screen");
-  const customEnding = document.getElementById("custom-ending");
+  const storyBox    = document.getElementById("story-box");
+  const choiceBox   = document.getElementById("choice-buttons");
+  const nextBtn     = document.getElementById("next-button");
+  const beforeBtn   = document.getElementById("before-button");
+  const endingScreen  = document.getElementById("ending-screen");
+  const customEnding  = document.getElementById("custom-ending");
 
+  // 커스텀 엔딩 숨기기
   customEnding.classList.add("hidden");
 
-  // 1) 선택지 영역 초기화
+  // 선택지 영역 초기화
   choiceBox.innerHTML = "";
   choiceBox.classList.add("hidden");
 
-  // 2) 스텝이 존재하지 않으면 (배열 끝) → 엔딩 화면으로 이동
+  // 1) 지금 스텝이 없으면 → 엔딩 처리
   if (!step) {
+    if (currentKey === "attack_plan") {
+      // 커스텀 엔딩
+      document.getElementById("story-screen").classList.add("hidden");
+      customEnding.textContent = "진실은 애니를 통해 확인하세요";
+      customEnding.classList.remove("hidden");
+      return;
+    }
+    // 기본 엔딩
     document.getElementById("story-screen").classList.add("hidden");
-    document.getElementById("ending-screen").classList.remove("hidden");
+    endingScreen.classList.remove("hidden");
     return;
   }
 
-  // 3) 스텝 타입에 따라 분리
-  if (!step) {
-    // “숨겨진 비밀이 있는 지하실” 분기에서 custom ending 출력
-    if (currentKey === "attack_plan") {
-      // 스토리 화면 완전히 숨기기
-      document.getElementById("story-screen").classList.add("hidden");
-      // 커스텀 엔딩 텍스트 삽입 및 표시
-      customEnding.textContent = "진실은 애니를 통해 확인하세요";
-      customEnding.classList.remove("hidden");
-    } else {
-      // 기본 엔딩 화면
-      document.getElementById("story-screen").classList.add("hidden");
-      endingScreen.classList.remove("hidden");
-    }
-    return;
-  }  
-
+  // 2) 텍스트 스텝 처리
   if (step.type === "text") {
-    // ── 텍스트 스텝 ──────────────────────────────────────
     storyBox.style.display = "block";
-
-    // 이전 스텝이 text 타입이면 이어 붙이기, 아니면 새로 쓰기
     const prevStep = currentStory[currentStep - 1];
     if (prevStep && prevStep.type === "text") {
       storyBox.innerText += "\n" + step.content;
     } else {
       storyBox.innerText = step.content;
     }
-
-    // “다음” 버튼만 표시 (“이전” 버튼은 currentStep > 0일 때만)
-    nextBtn.style.display = "inline-block";
+    nextBtn.style.display   = "inline-block";
     beforeBtn.style.display = currentStep > 0 ? "inline-block" : "none";
 
+    // “의문의 책” 애니메이션
     if (
       currentKey === "attack_plan" &&
       step.content.includes("의문의 책을 발견했다")
@@ -243,48 +232,62 @@ function displayStep() {
       showBookAnimation();
     }
   }
+  // 3) 선택지 스텝 처리
   else if (step.type === "choice") {
-    // ── 선택지 스텝 ──────────────────────────────────────
-    storyBox.style.display = "none";   // 텍스트 박스 완전 숨김
-    nextBtn.style.display = "none";    // 다음 버튼 숨김
-    beforeBtn.style.display = "none";  // 이전 버튼 숨김
+    storyBox.style.display  = "none";
+    nextBtn.style.display   = "none";
+    beforeBtn.style.display = "none";
 
-    // choice 버튼들 생성
     step.choices.forEach(choice => {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = choice.text;
-      btn.style.width = "100%";
-      btn.style.fontSize = "1.1rem";
-      btn.style.padding = "12px 0";
+      btn.style.width     = "100%";
+      btn.style.fontSize  = "1.1rem";
+      btn.style.padding   = "12px 0";
+      btn.style.cursor    = "pointer";
 
-     btn.onclick = () => {
-        // 1) 배경 먼저 변경 (nextKey가 정의되어 있을 때만)
+      btn.onclick = () => {
+        // 1) 배경 변경
         if (choice.nextKey && bgMap[choice.nextKey]) {
-          document.body.style.backgroundImage = `url('${bgMap[choice.nextKey]}')`;
+          document.body.style.backgroundImage =
+            `url('${bgMap[choice.nextKey]}')`;
         }
-        storyBox.style.display = "block";
-        storyBox.innerText = choice.result;
-        
-        // 2) result 텍스트만 굵게 표시
+        // 2) 선택 결과 볼드 표시
         storyBox.style.display = "block";
         storyBox.innerHTML = `<span class="bold-text">${choice.result}</span>`;
 
-        // 3) 3초 뒤에 분기 처리
+        // 3) 1.5초 뒤 분기 이동
         setTimeout(() => {
-          // nextKey가 없으면(=null) → 기존 스토리에서 다음 스텝으로 넘어가기
           if (!choice.nextKey) {
             currentStep++;
             displayStep();
             return;
           }
-
-          // nextKey가 있으면 → 분기 키로 스토리 배열 교체
+          // 분기 스토리 배열 로드
           currentKey = choice.nextKey;
           currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
+
+          // 다시 ${selectedCharacter} 치환
+          currentStory.forEach(step2 => {
+            if (step2.type === "text") {
+              step2.content = step2.content.replace(
+                /\$\{selectedCharacter\}/g,
+                selectedCharacter
+              );
+            } else if (step2.type === "choice") {
+              step2.choices.forEach(c2 => {
+                c2.result = c2.result.replace(
+                  /\$\{selectedCharacter\}/g,
+                  selectedCharacter
+                );
+              });
+            }
+          });
+
           currentStep = 0;
           displayStep();
-        }, 4000);
+        }, 1500);
       };
 
       choiceBox.appendChild(btn);
@@ -294,13 +297,13 @@ function displayStep() {
   }
 }
 
-// “다음” 버튼 클릭 시
+// ─── “다음” 버튼 클릭 시 ─────────────────────────────────────────────
 function nextStory() {
   currentStep++;
   displayStep();
 }
 
-// “이전” 버튼 클릭 시
+// ─── “이전” 버튼 클릭 시 ─────────────────────────────────────────────
 function beforeStory() {
   if (currentStep > 0) {
     currentStep--;
@@ -308,10 +311,9 @@ function beforeStory() {
   }
 }
 
-// “처음으로” 버튼 (페이지 새로고침)
+// ─── “처음으로” 버튼 클릭 시 (페이지 새로고침) ─────────────────────────
 function goHome() {
   location.reload();
 }
 
-  
-// ────────────────────────────────────────────────────────────────────
+// ──────────────────────────────────────────────────────────────────────

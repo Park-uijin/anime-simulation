@@ -140,7 +140,6 @@ function showBookAnimation() {
 
 // ─── 시작 화면 → 이름 입력 화면 전환 ─────────────────────────────────
 function goToNameInput() {
-  alert("goToNameInput 호출됨"); // 디버그용
   document.getElementById("start-screen").classList.add("hidden");
   document.getElementById("name-screen").classList.remove("hidden");
 }

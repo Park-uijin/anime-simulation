@@ -1,4 +1,4 @@
-<!DOCTYPE html>More actions
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -7,44 +7,101 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- 시작 화면 -->
+  <!-- ─── 시작 화면 ──────────────────────────────────────────────────── -->
   <div id="start-screen" class="screen">
     <h1 class="title">
       애니<br />
       시뮬레이션
     </h1>
-    <button type="button" class="start-button" onclick="goToNameInput()">시작하기</button>
+    <button 
+      type="button" 
+      class="start-button" 
+      onclick="goToNameInput()"
+    >
+      시작하기
+    </button>
   </div>
+  <!-- ────────────────────────────────────────────────────────────────── -->
 
-  <!-- 이름 입력 화면 -->
+
+  <!-- ─── 이름 입력 화면 ───────────────────────────────────────────────── -->
   <div id="name-screen" class="screen hidden">
     <h2>당신의 이름을 입력하세요</h2>
-    <input type="text" id="player-name" placeholder="이름 입력" />
-    <button type="button" onclick="startStory()">확인</button>
-    <button type="button" class="home-button" onclick="goHome()">← 처음으로</button>
+    <input 
+      type="text" 
+      id="player-name" 
+      placeholder="이름 입력" 
+    />
+    <button 
+      type="button" 
+      onclick="startStory()"
+    >
+      확인
+    </button>
+    <button 
+      type="button" 
+      class="home-button" 
+      onclick="goHome()"
+    >
+      ← 처음으로
+    </button>
   </div>
+  <!-- ────────────────────────────────────────────────────────────────── -->
 
-  <!-- 스토리 화면 -->
+
+  <!-- ─── 스토리 화면 ───────────────────────────────────────────────────── -->
   <div id="story-screen" class="screen hidden">
-    <div id="story-box" class="story-box">스토리가 여기에 표시됩니다.</div>
+    <div id="story-box" class="story-box">
+      스토리가 여기에 표시됩니다.
+    </div>
     <div id="choice-buttons" class="button-group hidden"></div>
-    <!-- 이전 버튼(왼쪽 하단) -->
-    <button type="button" id="before-button" onclick="beforeStory()">이전</button>
-    <!-- 다음 버튼(오른쪽 하단) -->
-    <button type="button" id="next-button" onclick="nextStory()">다음</button>
-    <button type="button" class="home-button" onclick="goHome()">← 처음으로</button>
+    <!-- 이전 버튼 (왼쪽 하단) -->
+    <button 
+      type="button" 
+      id="before-button" 
+      onclick="beforeStory()"
+    >
+      이전
+    </button>
+    <!-- 다음 버튼 (오른쪽 하단) -->
+    <button 
+      type="button" 
+      id="next-button" 
+      onclick="nextStory()"
+    >
+      다음
+    </button>
+    <button 
+      type="button" 
+      class="home-button" 
+      onclick="goHome()"
+    >
+      ← 처음으로
+    </button>
   </div>
+  <!-- ────────────────────────────────────────────────────────────────── -->
 
-  <!-- 엔딩 화면 -->
+
+  <!-- ─── 엔딩 화면 ─────────────────────────────────────────────────────── -->
   <div id="ending-screen" class="screen hidden">
     <h2>게임 오버</h2>
     <p>당신의 여정은 여기서 끝났습니다.</p>
-    <button type="button" onclick="goHome()">처음으로 돌아가기</button>
+    <button 
+      type="button" 
+      onclick="goHome()"
+    >
+      처음으로 돌아가기
+    </button>
   </div>
+  <!-- ────────────────────────────────────────────────────────────────── -->
 
+
+  <!-- ─── 커스텀 엔딩 레이어 ───────────────────────────────────────────── -->
   <div id="custom-ending" class="hidden"></div>
+  <!-- ────────────────────────────────────────────────────────────────── -->
 
-<!-- 스크립트는 body 맨 아래 -->
+
+  <!-- ─── JavaScript (페이지 맨 아래에 배치) ─────────────────────────────── -->
   <script src="script.js"></script>
 </body>
 </html>

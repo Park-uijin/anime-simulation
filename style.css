@@ -62,7 +62,7 @@ html, body {
 
 /* 공통 화면 스타일 */
 .screen {
-  display: flex;
+ 
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -71,7 +71,6 @@ html, body {
   width: 100%;          /* ← 추가: 화면 너비를 100%로 채우기 */
   position: relative;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.7);
   
 }
 /* .screen 자체는 클릭을 무시하지만, 

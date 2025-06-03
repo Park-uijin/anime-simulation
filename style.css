@@ -37,9 +37,6 @@ html, body {
   height: 100%;
   position: relative;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  /* 클릭이 오버레이로 막히는 경우 대비 */
-  
 }
 /* .screen 자체는 클릭을 무시하지만, 
    내부의 버튼들은 pointer-events: auto 로 따로 켜줍니다 */
@@ -118,6 +115,8 @@ button:hover {
   right: 90px;   /* 오른쪽에서 20px 들어온 위치 */
   z-index: 20;
   pointer-events: auto;
+
+  background-color: transparent
 }
 
 /* 선택지 버튼 그룹 */

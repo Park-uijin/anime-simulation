@@ -130,6 +130,7 @@ const stories = {
 };
 
 // ─── 게임 흐름 함수 정의 
+────────────────────────────────────────────
 
 function showBookAnimation() {
   // book.png는 프로젝트에 반드시 존재해야 합니다. 혹은 URL을 넣어주세요.
@@ -147,7 +148,6 @@ function showBookAnimation() {
 
 // 시작 화면 → 이름 입력 화면으로 전환
 function goToNameInput() {
-  alert("goToNameInput 호출됨");
   document.getElementById("start-screen").classList.add("hidden");
   document.getElementById("name-screen").classList.remove("hidden");
 }
@@ -165,17 +165,6 @@ function startStory() {
   // 루트 스토리(attack_root) 로드
   currentKey = "attack_root";
   currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
-
-   currentStory.forEach(step => {
-    if (step.type === "text") {
-      step.content = step.content.replace(/\$\{selectedCharacter\}/g, selectedCharacter);
-    }
-    else if (step.type === "choice") {
-      step.choices.forEach(choice => {
-        choice.result = choice.result.replace(/\$\{selectedCharacter\}/g, selectedCharacter);
-      });
-    }
-  });
 
   document.body.style.backgroundImage = `url('${bgMap.default}')`;
 
@@ -215,45 +204,27 @@ function displayStep() {
   }
 
   // 3) 스텝 타입에 따라 분리
- function displayStep() {
-  const step = currentStory[currentStep];
-  const storyBox    = document.getElementById("story-box");
-  const choiceBox   = document.getElementById("choice-buttons");
-  const nextBtn     = document.getElementById("next-button");
-  const beforeBtn   = document.getElementById("before-button");
-  const endingScreen  = document.getElementById("ending-screen");
-  const customEnding  = document.getElementById("custom-ending");
-
-  // 1) 먼저 커스텀 엔딩 레이어를 숨기고 시작
-  customEnding.classList.add("hidden");
-
-  // 2) 선택지 영역 초기화
-  choiceBox.innerHTML = "";
-  choiceBox.classList.add("hidden");
-
-  // ─── 3) 스텝이 없으면 → 엔딩 처리 ────────────────────────────────────
   if (!step) {
-    // (a) "attack_plan" 분기에서 커스텀 엔딩을 띄우고 싶다면 여기서 분기
+    // “숨겨진 비밀이 있는 지하실” 분기에서 custom ending 출력
     if (currentKey === "attack_plan") {
+      // 스토리 화면 완전히 숨기기
       document.getElementById("story-screen").classList.add("hidden");
+      // 커스텀 엔딩 텍스트 삽입 및 표시
       customEnding.textContent = "진실은 애니를 통해 확인하세요";
       customEnding.classList.remove("hidden");
-      return;
+    } else {
+      // 기본 엔딩 화면
+      document.getElementById("story-screen").classList.add("hidden");
+      endingScreen.classList.remove("hidden");
     }
-
-    // (b) 그 외에는 일반 엔딩 화면(게임 오버)으로
-    document.getElementById("story-screen").classList.add("hidden");
-    endingScreen.classList.remove("hidden");
     return;
-  }
+  }  
 
-
-  // ─── 4) “텍스트” 스텝 처리 ───────────────────────────────────────
   if (step.type === "text") {
-    // (a) 스토리 박스를 보이게
+    // ── 텍스트 스텝 ──────────────────────────────────────
     storyBox.style.display = "block";
 
-    // (b) 이전 스텝이 텍스트였다면 이어붙이고, 아니면 새로 쓰기
+    // 이전 스텝이 text 타입이면 이어 붙이기, 아니면 새로 쓰기
     const prevStep = currentStory[currentStep - 1];
     if (prevStep && prevStep.type === "text") {
       storyBox.innerText += "\n" + step.content;
@@ -261,11 +232,10 @@ function displayStep() {
       storyBox.innerText = step.content;
     }
 
-    // (c) “다음” 버튼 항상 보이기, “이전” 버튼은 currentStep > 0일 때만
-    nextBtn.style.display   = "inline-block";
+    // “다음” 버튼만 표시 (“이전” 버튼은 currentStep > 0일 때만)
+    nextBtn.style.display = "inline-block";
     beforeBtn.style.display = currentStep > 0 ? "inline-block" : "none";
 
-    // (d) “의문의 책을 발견했다” 문구가 나올 때 애니메이션 트리거
     if (
       currentKey === "attack_plan" &&
       step.content.includes("의문의 책을 발견했다")
@@ -273,82 +243,56 @@ function displayStep() {
       showBookAnimation();
     }
   }
-  // ─── 5) “선택지” 스텝 처리 ───────────────────────────────────────
   else if (step.type === "choice") {
-    // (a) 스토리 박스와 네비게이션 버튼을 모두 숨기기
-    storyBox.style.display = "none";
-    nextBtn.style.display  = "none";
-    beforeBtn.style.display = "none";
+    // ── 선택지 스텝 ──────────────────────────────────────
+    storyBox.style.display = "none";   // 텍스트 박스 완전 숨김
+    nextBtn.style.display = "none";    // 다음 버튼 숨김
+    beforeBtn.style.display = "none";  // 이전 버튼 숨김
 
-    // (b) 각 선택지마다 버튼 생성
+    // choice 버튼들 생성
     step.choices.forEach(choice => {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = choice.text;
-      btn.style.width     = "100%";
-      btn.style.fontSize  = "1.1rem";
-      btn.style.padding   = "12px 0";
-      btn.style.cursor    = "pointer";
+      btn.style.width = "100%";
+      btn.style.fontSize = "1.1rem";
+      btn.style.padding = "12px 0";
 
-      btn.onclick = () => {
-        // 1) 배경 이미지 변경 (nextKey가 있을 때만)
+     btn.onclick = () => {
+        // 1) 배경 먼저 변경 (nextKey가 정의되어 있을 때만)
         if (choice.nextKey && bgMap[choice.nextKey]) {
-          document.body.style.backgroundImage =
-            `url('${bgMap[choice.nextKey]}')`;
+          document.body.style.backgroundImage = `url('${bgMap[choice.nextKey]}')`;
         }
-
-        // 2) 선택 결과 텍스트를 볼드체로 표시
         storyBox.style.display = "block";
-        storyBox.innerHTML =
-          `<span class="bold-text">${choice.result}</span>`;
+        storyBox.innerText = choice.result;
+        
+        // 2) result 텍스트만 굵게 표시
+        storyBox.style.display = "block";
+        storyBox.innerHTML = `<span class="bold-text">${choice.result}</span>`;
 
-        // 3) 1.5초 뒤 분기/다음 스텝 처리
+        // 3) 3초 뒤에 분기 처리
         setTimeout(() => {
-          // (i) nextKey가 없으면 기존 스토리에서 다음 스텝으로 이동
+          // nextKey가 없으면(=null) → 기존 스토리에서 다음 스텝으로 넘어가기
           if (!choice.nextKey) {
             currentStep++;
             displayStep();
             return;
           }
 
-          // (ii) nextKey가 있으면 분기 키로 스토리 배열 교체
+          // nextKey가 있으면 → 분기 키로 스토리 배열 교체
           currentKey = choice.nextKey;
-          currentStory = JSON.parse(
-            JSON.stringify(stories[currentKey])
-          );
-
-          // (iii) 분기된 배열 안의 ${selectedCharacter} 치환
-          currentStory.forEach(step2 => {
-            if (step2.type === "text") {
-              step2.content = step2.content.replace(
-                /\$\{selectedCharacter\}/g,
-                selectedCharacter
-              );
-            } else if (step2.type === "choice") {
-              step2.choices.forEach(c2 => {
-                c2.result = c2.result.replace(
-                  /\$\{selectedCharacter\}/g,
-                  selectedCharacter
-                );
-              });
-            }
-          });
-
-          // (iv) 새 분기 스토리의 첫 스텝부터 다시 렌더링
+          currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
           currentStep = 0;
           displayStep();
-        }, 1500);
+        }, 4000);
       };
 
       choiceBox.appendChild(btn);
     });
 
-    // (c) 선택지 박스 보이기
     choiceBox.classList.remove("hidden");
   }
 }
-// ─────────────────────────────────────────────────────────────────────────
-
 
 // “다음” 버튼 클릭 시
 function nextStory() {
@@ -368,3 +312,6 @@ function beforeStory() {
 function goHome() {
   location.reload();
 }
+
+  
+// ────────────────────────────────────────────────────────────────────

@@ -309,6 +309,9 @@ html, body {
 
 /* ─── 19. 스토리 화면 버튼 강제 표시(추가) ─── */
 #story-screen button {
+  background:#ffbf00 !important;  /* 밝은 노랑 */
+  border:2px solid red !important;
+  color:#000 !important;
   display: inline-block !important;
   pointer-events: auto !important;
   opacity: 1 !important;

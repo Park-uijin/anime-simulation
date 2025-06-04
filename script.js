@@ -190,8 +190,6 @@ function displayStep() {
   const endingScreen  = document.getElementById("ending-screen");
   const customEnding  = document.getElementById("custom-ending");
 
-  // 커스텀 엔딩 숨기기
-  customEnding.classList.add("hidden");
 
   // 선택지 영역 초기화
   choiceBox.innerHTML = "";
@@ -199,13 +197,6 @@ function displayStep() {
 
   // 1) 지금 스텝이 없으면 → 엔딩 처리
   if (!step) {
-    if (currentKey === "attack_plan") {
-      // 커스텀 엔딩
-      document.getElementById("story-screen").classList.add("hidden");
-      customEnding.textContent = "진실은 애니를 통해 확인하세요";
-      customEnding.classList.remove("hidden");
-      return;
-    }
     // 기본 엔딩
     document.getElementById("story-screen").classList.add("hidden");
     endingScreen.classList.remove("hidden");

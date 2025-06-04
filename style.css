@@ -1,17 +1,20 @@
+/* ------------------------------------------------------------
+   공통 설정 (기존 .screen, 버튼 등은 그대로 두고 필요한 부분만 수정)
+   ------------------------------------------------------------ */
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Roboto+Condensed:wght@400;700&display=swap');
 
-/* ─── 기본 설정 ───────────────────────────────────────────────────── */
 html, body {
   margin: 0;
   padding: 0;
-  background-color: black;
-  background-size: cover;
-  background-position: center;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: black;
+  background-size: cover;
+  background-position: center;
   font-family: 'Roboto Condensed', sans-serif;
-  color: #f0f0f0; /* 텍스트는 진한 흰색 */
+  color: #f0f0f0;
+  box-sizing: border-box;
 }
 
 /* 스크롤바 커스터마이즈 (선택 사항) */
@@ -27,98 +30,158 @@ html, body {
   border: 2px solid #2a2a2a;
 }
 
-/* 공통 화면 스타일 */
+/* ――― 공통 화면 스타일 ――― */
 .screen {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 40px;
-  height: 100%;
-  position: relative;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100vh;
   text-align: center;
+  background-color: rgba(0, 0, 0, 0.7); /* 기본 오버레이 */
+  z-index: 10;
 }
-/* .screen 자체는 클릭을 무시하지만, 
-   내부의 버튼들은 pointer-events: auto 로 따로 켜줍니다 */
 
-/* 숨기기용 클래스 */
+/* 숨김 처리용 클래스 */
 .hidden {
   display: none;
 }
 
-/* ─── 시작 화면·엔딩 화면 고정(스크롤 방지) ────────────────────────── */
-#start-screen,
-#ending-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  z-index: 10;
-  /* 내부 버튼 클릭이 가능하도록 pointer-events 설정 */
-  pointer-events: auto;
+/* ――― 시작 화면(#start-screen) ――― */
+#start-screen {
+  /* 첫 화면만 오버레이 제거하고 배경이미지 */
+  background-color: transparent !important;
+  background-image: url('https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/start-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 5; /* 스토리/이름 입력 화면(z-index:10)보다 낮게 두어, 숨길 때 정상 처리 */
 }
 
-/* ─── 스토리 화면: 다음/이전 버튼 위치 고정 ────────────────────────── */
-#story-screen #next-button {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-}
-#story-screen #before-button {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-}
-
-/* ───────────────────────────────────────────────────────────────────── */
-
-/* 제목 */
-.title {
-  font-family: 'Exo 2', sans-serif;
-  height: 31vh;
-  line-height: 1.1;       /* 한 줄당 텍스트 간격을 좀 조여 줌 */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* 두 줄 텍스트를 세로 중앙 정렬 */
-  align-items: center;
-  font-size: 15vh;
-  color: #f5f5f5;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-  margin-bottom: 20px;
-}
-
-/* 공통 버튼 스타일 */
-button {
-  background-color: #444;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 25px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: 0.3s ease;
-  /* 버튼은 항상 클릭 가능하도록 */
-  pointer-events: auto;
-}
-
-button:hover {
-  background-color: #666;
-  transform: scale(1.05);
-}
-
-/* 시작 버튼 위치 조정 */
+/* 시작하기 버튼(항상 위에 떠 있도록 z-index 높임) */
 .start-button {
   position: absolute;
-  top: 20px;     /* 위에서 20px 내려온 위치 */
-  right: 90px;   /* 오른쪽에서 20px 들어온 위치 */
-  z-index: 20;
-  pointer-events: auto;
-
-  background-color: transparent
+  top: 20px;
+  right: 20px;
+  z-index: 999; /* 충분히 높게 */
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #000;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.start-button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
+/* ――― 이름 입력 화면(#name-screen) 배경 설정 ――― */
+#name-screen {
+  /* 기존 .screen 오버레이 위에 반투명 레이어 남김 */
+  background-color: rgba(0, 0, 0, 0.6); 
+  /* 그 위에 배경이미지 */
+  background-image: url('https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/name-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 10; /* 기본 화면과 동일 */
+}
+
+/* 이름 입력 제목(h2) */
+#name-screen h2 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 3rem;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  margin-bottom: 30px;
+}
+
+/* 이름 입력 인풋 박스 */
+#name-screen input#player-name {
+  width: 80%;
+  max-width: 500px;
+  padding: 15px 20px;
+  font-size: 1.2rem;
+  font-family: 'Roboto Condensed', sans-serif;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  margin-bottom: 20px;
+  outline: none;
+}
+#name-screen input#player-name:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: #ffffff;
+  box-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+/* 이름 입력 확인 버튼 */
+#name-screen button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+#name-screen button:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+/* 확인 버튼 강조 */
+#name-screen button[onclick="startStory()"] {
+  background-color: rgba(0, 150, 136, 0.8);
+  border: 2px solid rgba(0,150,136,0.9);
+}
+#name-screen button[onclick="startStory()"]:hover {
+  background-color: rgba(0, 150, 136, 1);
+}
+/* 처음으로 버튼 스타일 */
+#name-screen .home-button {
+  background-color: rgba(200, 200, 200, 0.2);
+  border: 2px solid rgba(200,200,200,0.7);
+  color: #e0e0e0;
+}
+#name-screen .home-button:hover {
+  background-color: rgba(200, 200, 200, 0.4);
+}
+
+/* ――― 스토리 화면(#story-screen) ――― */
+#story-screen {
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+/* 스토리 박스 */
+.story-box {
+  width: 90%;
+  max-width: 700px;
+  min-height: 120px;
+  padding: 20px;
+  background-color: rgba(30, 30, 30, 0.8);
+  border: 2px solid rgba(200,200,200,0.3);
+  border-radius: 4px;
+  color: #f0f0f0;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: 'Roboto Condensed', sans-serif;
+  box-shadow:
+    inset 0 0 8px rgba(0,0,0,0.8),
+    0 0 12px rgba(0,0,0,0.5);
+  margin-top: 80px; /* 메시지 박스를 화면 아래쪽으로 조금 내림 */
+  margin-bottom: 20px;
+  white-space: pre-wrap;
+  text-align: left;
+}
 /* 선택지 버튼 그룹 */
 .button-group {
   display: flex;
@@ -131,37 +194,29 @@ button:hover {
 .button-group button {
   width: 100%;
   font-size: 1.1rem;
+  padding: 12px 0;
+  cursor: pointer;
 }
 
-/* 스토리 박스 */
-.story-box {
-  width: 90%;
-  max-width: 700px;
-  min-height: 120px;
-  padding: 20px;
-  background-color: rgba(30, 30, 30, 0.8);
-  border: 2px solid rgba(200, 200, 200, 0.3);
-  border-radius: 4px;
-
-  /* 텍스트는 진한 흰색으로 가독성 확보 */
-  color: #f0f0f0;
-  font-size: 1rem;
-  line-height: 1.5;
-  font-family: 'Roboto Condensed', sans-serif;
-
-  box-shadow:
-    inset 0 0 8px rgba(0,0,0,0.8),
-    0 0 12px rgba(0,0,0,0.5);
-
-  /* 아래로 내리기 위한 여백 추가 */
-  margin-top: 100px;  /* 이 값을 조절해 높이를 변경하세요 */
-  margin-bottom: 20px;
-
-  white-space: pre-wrap;
-  text-align: left;
+/* 결과 텍스트(결과 메시지)를 볼드체로 강조 */
+.bold-text {
+  font-weight: 900;
+  color: #ffffff; /* 진한 흰색 유지 */
 }
 
-/* “처음으로” 버튼 (좌측 하단 고정) */
+/* 이전/다음 버튼 위치 고정 */
+#story-screen #next-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+#story-screen #before-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+/* “처음으로” 버튼 */
 .home-button {
   position: absolute;
   bottom: 20px;
@@ -172,24 +227,52 @@ button:hover {
   color: #ccc;
   border-radius: 6px;
   opacity: 0.7;
-  pointer-events: auto;
+  cursor: pointer;
 }
-
 .home-button:hover {
   opacity: 1;
 }
 
-/* 시작 화면 배경 이미지 (GitHub Raw URL 예시) */
-#start-screen {
-  background-image: url('https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/start-bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  background-color: transparent;  
+/* ――― 엔딩 화면(#ending-screen) ――― */
+#ending-screen {
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+#ending-screen h2, #ending-screen p {
+  color: #f0f0f0;
+}
+#ending-screen button {
+  margin-top: 20px;
 }
 
-/* 반응형 설정 */
+/* ――― 책 이미지 애니메이션 ――― */
+.book-image {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: auto;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 50; /* 충분히 위에 떠 있도록 */
+  animation: bookPop 1s forwards;
+}
+@keyframes bookPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.0);
+    opacity: 1;
+  }
+}
+
+/* ――― 반응형 설정 ――― */
 @media (max-width: 600px) {
   .title {
     font-size: 2rem;
@@ -198,6 +281,18 @@ button:hover {
     font-size: 1rem;
   }
   .button-group button {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+  #name-screen h2 {
+    font-size: 2.2rem;
+  }
+  #name-screen input#player-name {
+    width: 90%;
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+  #name-screen button {
     font-size: 1rem;
     padding: 10px 20px;
   }

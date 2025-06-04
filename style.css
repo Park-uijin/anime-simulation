@@ -277,21 +277,28 @@ html, body {
 
 /* 공통 모양 */
 #story-screen #before-button,
+#story-screen #next-button,
 #story-screen #home-button {
-  width: auto;                 /* 다이내믹 크기 – 다른 버튼과 동일 */
-  padding: 12px 25px;          /* 다른 버튼과 동일한 패딩 */
-  font-size: 1.1rem;
-  border-radius: 6px;
-  border: 2px solid rgba(255,255,255,0.7);
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  cursor: pointer;
-  transition: background-color .2s, transform .2s;
+  width: auto !important;
+  padding: 12px 25px !important;     /* 동일 패딩 */
+  font-size: 1.1rem !important;
+  border-radius: 6px !important;
+  border: 2px solid rgba(255,255,255,0.7) !important;
+  background-color: rgba(255,255,255,0.15) !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  transition: background-color .2s, transform .2s !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  z-index: 9999 !important;          /* 어떤 요소보다 위 */
 }
 #story-screen #before-button:hover,
+#story-screen #next-button:hover,
 #story-screen #home-button:hover {
-  background-color: rgba(255,255,255,0.35);
-  transform: translateY(-2px);
+  background-color: rgba(255,255,255,0.35) !important;
+  transform: translateY(-2px) !important;
 }
 
 /* 위치 : 왼쪽 아래 모서리에 세로로 겹치기 */
@@ -360,6 +367,6 @@ html, body {
 }
 
 /* 위치 고정 – 화면 크기 변해도 항상 모서리에 붙습니다 */
-#before-button  { position:fixed !important; bottom: 24px; left:  24px; }
-#next-button    { position:fixed !important; bottom: 24px; right: 24px; }
-#home-button    { position:fixed !important; top:    24px; left:  24px; }
+#story-screen #home-button   { position: fixed !important; left: 24px; bottom: 88px; } /* 맨 위 */
+#story-screen #before-button { position: fixed !important; left: 24px; bottom: 24px; } /* 그 아래 64px(= 패딩12×2+글자높이) 띄움 */
+#story-screen #next-button   { position: fixed !important; right:24px; bottom:24px; }

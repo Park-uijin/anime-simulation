@@ -1,11 +1,12 @@
-/* ─── 제일 위에 꼭 넣어 주세요 ─── */
+/* ─── 1. @import 는 가장 위에 (반드시 다른 규칙보다 먼저) ─── */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Roboto+Condensed:wght@400;700&display=swap');
+
+/* ─── 2. .hidden 은 그 다음에 ─── */
 .hidden {
   display: none !important;
 }
 
-/* ─── 아래는 기존 CSS… ─── */
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Roboto+Condensed:wght@400;700&display=swap');
-
+/* ─── 3. html / body 기본 설정 ─── */
 html, body {
   margin: 0;
   padding: 0;
@@ -20,7 +21,7 @@ html, body {
   box-sizing: border-box;
 }
 
-/* 스크롤바 커스터마이즈 (선택 사항) */
+/* ─── 4. 스크롤바 커스터마이즈 ─── */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -33,7 +34,7 @@ html, body {
   border: 2px solid #2a2a2a;
 }
 
-/* ――― 공통 화면 스타일 ――― */
+/* ─── 5. 공통 화면(.screen) ─── */
 .screen {
   display: flex;
   flex-direction: column;
@@ -45,11 +46,11 @@ html, body {
   width: 100%;
   height: 100vh;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.7); /* 기본 오버레이 */
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 10;
 }
 
-/* ――― 시작 화면(#start-screen) ――― */
+/* ─── 6. 시작 화면(#start-screen) ─── */
 #start-screen {
   background-color: transparent !important;
   background-image: url('https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/start-bg.jpg');
@@ -59,11 +60,11 @@ html, body {
   z-index: 5;
 }
 
-/* 시작하기 버튼(항상 위에 떠 있도록 z-index 높임) */
+/* ─── 7. 시작하기 버튼(.start-button) ─── */
 .start-button {
   position: absolute;
   top: 20px;
-  right: 20px;
+  right: 90px;
   z-index: 999;
   background-color: rgba(255, 255, 255, 0.3);
   color: #000;
@@ -78,13 +79,13 @@ html, body {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-/* ――― 이름 입력 화면(#name-screen) ――― */
+/* ─── 8. 이름 입력 화면(#name-screen) ─── */
 #name-screen {
   position: fixed;
   top: 0; left: 0;
   width: 100%;
   height: 100vh;
-  /* 배경이미지 + 투명 블랙 오버레이를 합쳐서 지정 */
+  /* 배경이미지 + 투명 블랙 오버레이를 함께 지정 */
   background: 
     linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
     url('https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/name-bg.jpg') center/cover no-repeat;
@@ -96,27 +97,27 @@ html, body {
   z-index: 10;
 }
 
-/* 제목(h2) */
+/* ─── 9. 이름 입력 제목(h2) ─── */
 #name-screen h2 {
   font-family: 'Exo 2', sans-serif;
   font-size: 3rem;
   color: #ffffff;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-  margin-bottom: 40px;  /* 여백을 넉넉히 줍니다 */
+  margin-bottom: 40px;
 }
 
-/* 입력창(input) */
+/* ─── 10. 입력창(input) ─── */
 #name-screen input#player-name {
   width: 80%;
   max-width: 600px;
-  padding: 20px 25px;     /* 더 크게 키우고 */
+  padding: 20px 25px;
   font-size: 1.3rem;
   font-family: 'Roboto Condensed', sans-serif;
   border: 2px solid rgba(255,255,255,0.7);
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
-  margin-bottom: 30px;    /* 아래 여백 충분히 */
+  margin-bottom: 30px;
   outline: none;
 }
 #name-screen input#player-name:focus {
@@ -125,7 +126,7 @@ html, body {
   box-shadow: 0 0 8px rgba(255,255,255,0.5);
 }
 
-/* 확인 버튼 */
+/* ─── 11. 확인 버튼 ─── */
 #name-screen button[onclick="startStory()"] {
   background-color: rgba(0, 150, 136, 0.8);
   border: 2px solid rgba(0,150,136,0.9);
@@ -135,7 +136,7 @@ html, body {
   font-size: 1.2rem;
   font-family: 'Roboto Condensed', sans-serif;
   cursor: pointer;
-  margin-bottom: 20px; /* 아래 여백 충분히 */
+  margin-bottom: 20px;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 #name-screen button[onclick="startStory()"]:hover {
@@ -143,23 +144,7 @@ html, body {
   transform: translateY(-2px);
 }
 
-/* 처음으로 버튼 */
-#name-screen .home-button {
-  background-color: rgba(200, 200, 200, 0.2);
-  border: 2px solid rgba(200,200,200,0.7);
-  color: #e0e0e0;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-#name-screen .home-button:hover {
-  background-color: rgba(200, 200, 200, 0.4);
-  transform: translateY(-2px);
-}
-
-/* ――― 스토리 화면(#story-screen) ――― */
+/* ─── 12. 스토리 화면(#story-screen) ─── */
 #story-screen {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 10;
@@ -198,13 +183,13 @@ html, body {
   padding: 12px 0;
   cursor: pointer;
 }
-/* 결과 메시지를 볼드체로 */
+/* 결과 메시지 볼드체 */
 .bold-text {
   font-weight: 900;
   color: #ffffff;
 }
 
-/* 이전/다음 버튼 */
+/* ─── 13. 이전/다음 버튼 ─── */
 #story-screen #next-button {
   position: absolute;
   bottom: 20px;
@@ -216,7 +201,22 @@ html, body {
   left: 20px;
 }
 
-/* “처음으로” 버튼 */
+/* ─── 14. 제목(.title) ─── */
+.title {
+  font-family: 'Exo 2', sans-serif;
+  height: 31vh;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 15vh;
+  color: #f5f5f5;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
+}
+
+/* ─── 15. “처음으로” 버튼 ─── */
 .home-button {
   position: absolute;
   bottom: 20px;
@@ -233,7 +233,7 @@ html, body {
   opacity: 1;
 }
 
-/* ――― 엔딩 화면(#ending-screen) ――― */
+/* ─── 16. 엔딩 화면(#ending-screen) ─── */
 #ending-screen {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 10;
@@ -245,7 +245,7 @@ html, body {
   margin-top: 20px;
 }
 
-/* ――― 책 이미지 애니메이션 ――― */
+/* ─── 17. 책 이미지 애니메이션 ─── */
 .book-image {
   position: fixed;
   top: 50%;
@@ -272,7 +272,7 @@ html, body {
   }
 }
 
-/* ――― 반응형 설정 ――― */
+/* ─── 18. 반응형 설정 ─── */
 @media (max-width: 600px) {
   .title {
     font-size: 2rem;

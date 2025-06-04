@@ -316,3 +316,17 @@ html, body {
   pointer-events: auto !important;
   opacity: 1 !important;
 }
+#story-screen #before-button,
+#story-screen #next-button,
+#story-screen #home-button {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  z-index: 9999 !important;      /* 어떤 요소 위에서도 */
+}
+
+/* 위치 고정 – 화면 크기 변해도 항상 모서리에 붙습니다 */
+#before-button  { position:fixed !important; bottom: 24px; left:  24px; }
+#next-button    { position:fixed !important; bottom: 24px; right: 24px; }
+#home-button    { position:fixed !important; top:    24px; left:  24px; }

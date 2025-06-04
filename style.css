@@ -273,6 +273,42 @@ html, body {
     opacity: 1;
   }
 }
+/* ─── 스토리 화면 좌측 네비게이션 버튼 정리 ─── */
+
+/* 공통 모양 */
+#story-screen #before-button,
+#story-screen #home-button {
+  width: auto;                 /* 다이내믹 크기 – 다른 버튼과 동일 */
+  padding: 12px 25px;          /* 다른 버튼과 동일한 패딩 */
+  font-size: 1.1rem;
+  border-radius: 6px;
+  border: 2px solid rgba(255,255,255,0.7);
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .2s, transform .2s;
+}
+#story-screen #before-button:hover,
+#story-screen #home-button:hover {
+  background-color: rgba(255,255,255,0.35);
+  transform: translateY(-2px);
+}
+
+/* 위치 : 왼쪽 아래 모서리에 세로로 겹치기 */
+#story-screen #home-button {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 30;
+}
+#story-screen #before-button {
+  position: fixed;
+  left: 20px;
+  bottom: calc(20px + 48px + 10px); /* home-button 높이(≈48px) + 여백 10px */
+  /* 필요에 따라 숫자(48,10) 조정 */
+  z-index: 30;
+}
+
 
 /* ─── 18. 반응형 설정 ─── */
 @media (max-width: 600px) {
@@ -309,9 +345,6 @@ html, body {
 
 /* ─── 19. 스토리 화면 버튼 강제 표시(추가) ─── */
 #story-screen button {
-  background:#ffbf00 !important;  /* 밝은 노랑 */
-  border:2px solid red !important;
-  color:#000 !important;
   display: inline-block !important;
   pointer-events: auto !important;
   opacity: 1 !important;

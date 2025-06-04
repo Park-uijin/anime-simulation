@@ -187,9 +187,8 @@ function displayStep() {
   const choiceBox   = document.getElementById("choice-buttons");
   const nextBtn     = document.getElementById("next-button");
   const beforeBtn   = document.getElementById("before-button");
-  const homeBtn = document.querySelector("#story-screen .home-button");
+  const homeBtn     = document.getElementById("home-button");
   const endingScreen  = document.getElementById("ending-screen");
-  const customEnding  = document.getElementById("custom-ending");
   
   nextBtn.style.display = "inline-block";
   beforeBtn.style.display = "inline-block";

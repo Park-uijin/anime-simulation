@@ -170,9 +170,7 @@ function startStory() {
     }
   });
 
-  // 배경 화면 변경
-  document.body.style.backgroundImage = `url('${bgMap.default}')`;
-
+  
   document.getElementById("name-screen").classList.add("hidden");
   document.getElementById("story-screen").classList.remove("hidden");
 
@@ -189,7 +187,10 @@ function displayStep() {
   const beforeBtn   = document.getElementById("before-button");
   const endingScreen  = document.getElementById("ending-screen");
   const customEnding  = document.getElementById("custom-ending");
-
+  
+  nextBtn.style.display = "block";
+  beforeBtn.style.display = "block";
+  homeBtn.style.display = "block";
 
   // 선택지 영역 초기화
   choiceBox.innerHTML = "";
@@ -286,6 +287,7 @@ function displayStep() {
 
     choiceBox.classList.remove("hidden");
   }
+ 
 }
 
 // ─── “다음” 버튼 클릭 시 ─────────────────────────────────────────────

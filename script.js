@@ -170,7 +170,9 @@ function startStory() {
     }
   });
 
-  
+  // startStory() 끝부분에 배경 기본 세팅
+  document.body.style.backgroundImage = `url('${bgMap.default}')`;
+
   document.getElementById("name-screen").classList.add("hidden");
   document.getElementById("story-screen").classList.remove("hidden");
 
@@ -185,12 +187,18 @@ function displayStep() {
   const choiceBox   = document.getElementById("choice-buttons");
   const nextBtn     = document.getElementById("next-button");
   const beforeBtn   = document.getElementById("before-button");
+  const homeBtn = document.querySelector("#story-screen .home-button");
   const endingScreen  = document.getElementById("ending-screen");
   const customEnding  = document.getElementById("custom-ending");
   
-  nextBtn.style.display = "block";
-  beforeBtn.style.display = "block";
-  homeBtn.style.display = "block";
+  nextBtn.style.display = "inline-block";
+  beforeBtn.style.display = "inline-block";
+  if (homeBtn) homeBtn.style.display = "inline-block"; // null 안전 처리
+
+
+  nextBtn.classList.remove("hidden");
+  beforeBtn.classList.remove("hidden");
+  if (homeBtn) homeBtn.classList.remove("hidden");
 
   // 선택지 영역 초기화
   choiceBox.innerHTML = "";
@@ -309,4 +317,4 @@ function goHome() {
   location.reload();
 }
 
-// ──────────────────────────────────────────────────────────────────────
+

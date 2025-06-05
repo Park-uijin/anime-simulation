@@ -129,7 +129,7 @@ const stories = {
 // ─── 책 이미지 애니메이션 함수 ────────────────────────────────────
 function showBookAnimation() {
   const img = document.createElement("img");
-  img.src = 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/book.png';
+  img.src = 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/book.jpg';
   img.alt = "의문의 책";
   img.className = "book-image";
   document.body.appendChild(img);
@@ -193,6 +193,7 @@ function displayStep() {
   const beforeBtn   = document.getElementById("before-button");
   const homeBtn     = document.getElementById("home-button");
   const endingScreen  = document.getElementById("ending-screen");
+  const endingMsg     = document.getElementById("ending-message");
   
   nextBtn.style.display = "inline-block";
   beforeBtn.style.display = "inline-block";
@@ -211,6 +212,13 @@ function displayStep() {
   if (!step) {
     // 기본 엔딩
     document.getElementById("story-screen").classList.add("hidden");
+    // 🔸 attack_plan 의 엔딩일 때만 문구 교체
+    if (currentKey === "attack_plan") {
+      endingMsg.innerText = "진실을 깨달은 당신 다음 여정을 준비하세요.";  // 원하는 문구
+    } else {
+      endingMsg.innerText = "당신의 여정은 여기서 끝났습니다."; // 기본 문구
+    }
+
     endingScreen.classList.remove("hidden");
     return;
   }

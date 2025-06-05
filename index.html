@@ -30,16 +30,14 @@
     <div id="story-box" class="story-box">스토리가 여기에 표시됩니다.</div>
     <div id="choice-buttons" class="button-group hidden"></div>
     <!-- 이전 버튼(왼쪽 하단) -->
-    <button type="button" id="before-button" onclick="beforeStory()">이전</button>
-    <!-- 다음 버튼(오른쪽 하단) -->
-    <button type="button" id="next-button" onclick="nextStory()">다음</button>
-    <button type="button" id="home-button" class="home-button" onclick="goHome()">← 처음으로</button>
-  </div>
+    <button id="before-button"  type="button" onclick="beforeStory()">이전</button>
+    <button id="next-button"    type="button" onclick="nextStory()">다음</button>
+    <button id="home-button"    type="button" onclick="goHome()">← 처음으로</button>
 
   <!-- 엔딩 화면 -->
   <div id="ending-screen" class="screen hidden">
     <h2>게임 오버</h2>
-    <p>당신의 여정은 여기서 끝났습니다.</p>
+    <p id="ending-message">당신의 여정은 여기서 끝났습니다.</p>
     <button type="button" onclick="goHome()">처음으로 돌아가기</button>
   </div>
 

@@ -237,6 +237,7 @@ function displayStep() {
       showBookAnimation();
     }
   }
+
   // 3) 선택지 스텝 처리
   else if (step.type === "choice") {
     storyBox.style.display  = "none";
@@ -300,7 +301,7 @@ function displayStep() {
 
     choiceBox.classList.remove("hidden");
   }
- 
+ }
 }
 
 // ─── “다음” 버튼 클릭 시 ─────────────────────────────────────────────

@@ -145,10 +145,6 @@ function goToNameInput() {
   document.getElementById("name-screen").classList.remove("hidden");
 }
 
-function changeBackground() {
-  const url = bgMap[currentKey] || bgMap.default;
-  document.body.style.backgroundImage = `url('${url}')`;
-}
 
 // ─── 이름 입력 후 스토리 시작 ────────────────────────────────────────
 function startStory() {
@@ -182,9 +178,16 @@ function startStory() {
   displayStep();
 }
 
+const $ = sel => document.getElementById(sel);
+
 // util
 function replaceName(str){
   return str.replace(/\$\{name\}/g, selectedCharacter);
+}
+
+function changeBackground() {
+  document.body.style.backgroundImage =
+    `url('${bgMap[currentKey] || bgMap.default}')`;
 }
 
 function loadBranch(key){
@@ -207,114 +210,88 @@ function loadBranch(key){
 
 // ─── 스토리 한 스텝씩 렌더링 ────────────────────────────────────────
 function displayStep() {
-  const step = currentStory[currentStep];
-  const storyBox    = document.getElementById("story-box");
-  const choiceBox   = document.getElementById("choice-buttons");
-  const nextBtn     = document.getElementById("next-button");
-  const beforeBtn   = document.getElementById("before-button");
-  const homeBtn     = document.getElementById("home-button");
-  const endingScreen  = document.getElementById("ending-screen");
-  const customEnding  = document.getElementById("custom-ending-screen");
+  const step   = currentStory[currentStep];
+  const box    = $("story-box");
+  const cBox   = $("choice-buttons");
+  const next   = $("next-button");
+  const prev   = $("before-button");
+  const home   = $("home-button");
+  const endScr = $("ending-screen");
+  const cusScr = $("custom-ending-screen");
+
+  
   
   nextBtn.style.display = "inline-block";
   beforeBtn.style.display = "inline-block";
   if (homeBtn) homeBtn.style.display = "inline-block"; // null 안전 처리
 
 
-  nextBtn.classList.remove("hidden");
-  beforeBtn.classList.remove("hidden");
-  if (homeBtn) homeBtn.classList.remove("hidden");
-
+  [next, prev, home].forEach(el => el && el.classList.remove("hidden"));
+  
   // 선택지 영역 초기화
-  choiceBox.innerHTML = "";
-  choiceBox.classList.add("hidden");
+  cBox.innerHTML = "";
+  cBox.classList.add("hidden");
 
   // 1) 지금 스텝이 없으면 → 엔딩 처리
   if (!step) {
-    document.getElementById("story-screen").classList.add("hidden");
-    // (a) "attack_plan" 분기에서 커스텀 엔딩을 띄우고 싶다면 여기서 분기
+    $("story-screen").classList.add("hidden");
     if (currentKey === "attack_plan") {
-      customEnding.classList.remove("hidden");
-      return;
+      cusScr.classList.remove("hidden");
+    } else {
+      endScr.classList.remove("hidden");
     }
-    // (b) 그 외에는 일반 엔딩 화면(게임 오버)으로
-    endingScreen.classList.remove("hidden");
     return;
   }
 
+  // --- 텍스트 스텝 -------------------------------------
   if (step.type === "text") {
-    storyBox.style.display = "block";
-    const prevStep = currentStory[currentStep - 1];
-    const line = replaceName(step.content);
+    box.style.display = "block";
 
-    if (prevStep && prevStep.type === "text") {
-      storyBox.innerText += "\n" + line;
-    }else {
-      storyBox.innerText = line;
-    }
-    
-    nextBtn.style.display   = "inline-block";
-    beforeBtn.style.display = currentStep > 0 ? "inline-block" : "none";
-    
-    // “의문의 책” 애니메이션
-    if (
-      currentKey === "attack_plan" &&
-      step.content.includes("의문의 책을 발견했다")) {
+    const line = replaceName(step.content);
+    const prevStep = currentStory[currentStep - 1];
+    box.innerText = (prevStep && prevStep.type === "text")
+                    ? box.innerText + "\n" + line
+                    : line;
+
+    next.style.display = "inline-block";
+    prev.style.display = currentStep > 0 ? "inline-block" : "none";
+
+    if (currentKey === "attack_plan" &&
+        step.content.includes("의문의 책을 발견했다")) {
       showBookAnimation();
     }
+    return;
   }
 
   // 3) 선택지 스텝 처리
-    else if (step.type === "choice") {
-      storyBox.style.display  = "none";
-      nextBtn.style.display   = "none";
-      beforeBtn.style.display = "none";
+    // --- 선택지 스텝 -------------------------------------
+  if (step.type === "choice") {
+
+    box.style.display  = "none";
+    next.style.display = prev.style.display = "none";
 
     step.choices.forEach(choice => {
       const btn = document.createElement("button");
-      btn.type = "button";
       btn.textContent = choice.text;
-      btn.style.width     = "100%";
-      btn.style.fontSize  = "1.1rem";
-      btn.style.padding   = "12px 0";
-      btn.style.cursor    = "pointer";
-
       btn.onclick = () => {
-        // 1) 배경 변경
-        if (choice.nextKey) {
-          loadBranch(choice.nextKey);   
+        if (choice.nextKey) {           // 바로 분기로
+          loadBranch(choice.nextKey);
           return;
         }
-        // 2) 선택 결과 볼드 표시
-        storyBox.style.display = "block";
-        storyBox.innerHTML = `<span class="bold-text">${choice.result}</span>`;
-
-        // 3) 1.5초 뒤 분기 이동
-        setTimeout(() => {
-          currentStep++;
-          displayStep();
-        }, 1500);
+        // 분기 없으면 결과 보여주고 다음 스텝
+        box.style.display = "block";
+        box.innerHTML = `<span class="bold-text">${choice.result}</span>`;
+        setTimeout(() => { currentStep++; displayStep(); }, 1500);
       };
-      
-      choiceBox.appendChild(btn);
+      cBox.appendChild(btn);
     });
       
-    choiceBox.classList.remove("hidden");
-  }
-
-// ─── “다음” 버튼 클릭 시 ─────────────────────────────────────────────
-function nextStory() {
-  currentStep++;
-  displayStep();
-}
-
-// ─── “이전” 버튼 클릭 시 ─────────────────────────────────────────────
-function beforeStory() {
-  if (currentStep > 0) {
-    currentStep--;
-    displayStep();
+    cBox.classList.remove("hidden");
   }
 }
+
+function nextStory()   { currentStep++; displayStep(); }
+function beforeStory() { if (currentStep>0) { currentStep--; displayStep(); } }
 
 // ─── “처음으로” 버튼 클릭 시 (페이지 새로고침) ─────────────────────────
 function goHome() {

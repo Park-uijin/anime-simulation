@@ -187,6 +187,23 @@ function replaceName(str){
   return str.replace(/\$\{name\}/g, selectedCharacter);
 }
 
+function loadBranch(key){
+  currentKey   = key;
+  currentStory = JSON.parse(JSON.stringify(stories[key]))
+                      .map(step => {
+                        if (step.type === "text"){
+                          step.content = replaceName(step.content);
+                        }else if(step.type === "choice"){
+                          step.choices.forEach(c=>{
+                            c.result = replaceName(c.result);
+                          });
+                        }
+                        return step;
+                      });
+  changeBackground();
+  currentStep = 0;
+  displayStep();
+}
 
 // ─── 스토리 한 스텝씩 렌더링 ────────────────────────────────────────
 function displayStep() {
@@ -248,10 +265,10 @@ function displayStep() {
   }
 
   // 3) 선택지 스텝 처리
-  else if (step.type === "choice") {
-    storyBox.style.display  = "none";
-    nextBtn.style.display   = "none";
-    beforeBtn.style.display = "none";
+    else if (step.type === "choice") {
+      storyBox.style.display  = "none";
+      nextBtn.style.display   = "none";
+      beforeBtn.style.display = "none";
 
     step.choices.forEach(choice => {
       const btn = document.createElement("button");
@@ -264,9 +281,9 @@ function displayStep() {
 
       btn.onclick = () => {
         // 1) 배경 변경
-        if (choice.nextKey && bgMap[choice.nextKey]) {
-          document.body.style.backgroundImage =
-            `url('${bgMap[choice.nextKey]}')`;
+        if (choice.nextKey) {
+          loadBranch(choice.nextKey);   
+          return;
         }
         // 2) 선택 결과 볼드 표시
         storyBox.style.display = "block";
@@ -274,39 +291,16 @@ function displayStep() {
 
         // 3) 1.5초 뒤 분기 이동
         setTimeout(() => {
-          if (!choice.nextKey) {
-            currentStep++;
-            displayStep();
-            return;
-          }
-          // 분기 스토리 배열 로드
-          currentKey = choice.nextKey;
-          currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
-          changeBackground();        
-
-          // 다시 ${selectedCharacter} 치환
-          currentStory.forEach(step=>{
-            if (step.type==="text"){
-              step2.content = replaceName(step2.content);
-            }else if (step.stype==="choice"){
-              step.choices.forEach(c=>{
-                c2.result = replaceName(c2.result);
-              });
-            }
-          }); 
-
-          currentStep = 0;
+          currentStep++;
           displayStep();
-        }, 3000);
+        }, 1500);
       };
-
+      
       choiceBox.appendChild(btn);
     });
-
+      
     choiceBox.classList.remove("hidden");
   }
- 
-}
 
 // ─── “다음” 버튼 클릭 시 ─────────────────────────────────────────────
 function nextStory() {

@@ -79,15 +79,15 @@ const stories = {
       type: "choice",
       choices: [
         {
-          text: "힘든 조사병단에 입단한다.",
-          result: "벽외 조사를 나간다.",
-          nextKey: "attack_out"
-        },
-        {
           text: "편한 헌병단에 입단한다.",
           result: "${name}은 왕을 호위하러 헌병단에 입단했다.",
           nextKey: "attack_in"
         }
+        {
+          text: "힘든 조사병단에 입단한다.",
+          result: "벽외 조사를 나간다.",
+          nextKey: "attack_out"
+        },
       ]
     }
   ],
@@ -129,7 +129,7 @@ const stories = {
 // ─── 책 이미지 애니메이션 함수 ────────────────────────────────────
 function showBookAnimation() {
   const img = document.createElement("img");
-  img.src = 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/book.jpg';
+  img.src = 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/book.png';
   img.alt = "의문의 책";
   img.className = "book-image";
   document.body.appendChild(img);

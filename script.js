@@ -273,6 +273,23 @@ function displayStep() {
           currentKey = choice.nextKey;
           currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
 
+          // 다시 ${selectedCharacter} 치환
+          currentStory.forEach(step2 => {
+            if (step2.type === "text") {
+              step2.content = step2.content.replace(
+                /\$\{name\}/g,
+                selectedCharacter
+              );
+            } else if (step2.type === "choice") {
+              step2.choices.forEach(c2 => {
+                c2.result = c2.result.replace(
+                  /\$\{name\}/g,
+                  selectedCharacter
+                );
+              });
+            }
+          });
+
           currentStep = 0;
           displayStep();
         }, 1500);

@@ -87,7 +87,7 @@ const stories = {
           text: "힘든 조사병단에 입단한다.",
           result: "벽외 조사를 나간다.",
           nextKey: "attack_out"
-        },
+        }
       ]
     }
   ],
@@ -193,7 +193,7 @@ function displayStep() {
   const beforeBtn   = document.getElementById("before-button");
   const homeBtn     = document.getElementById("home-button");
   const endingScreen  = document.getElementById("ending-screen");
-  const endingMsg     = document.getElementById("ending-message");
+  const endingMsg     = document.getElementById("endingMsg");
   
   nextBtn.style.display = "inline-block";
   beforeBtn.style.display = "inline-block";
@@ -214,7 +214,7 @@ function displayStep() {
     document.getElementById("story-screen").classList.add("hidden");
     // 🔸 attack_plan 의 엔딩일 때만 문구 교체
     if (currentKey === "attack_plan") {
-      endingMsg.innerText = "진실을 깨달은 당신 다음 여정을 준비하세요.";  // 원하는 문구
+      endingMsg.innerText = "진실을 깨달은 당신, 다음 여정을 준비하세요.";  // 원하는 문구
     } else {
       endingMsg.innerText = "당신의 여정은 여기서 끝났습니다."; // 기본 문구
     }
@@ -229,11 +229,10 @@ function displayStep() {
     const prevStep = currentStory[currentStep - 1];
     const line = replaceName(step.content);
 
-    if (prevStep && prevStep.type === "text") {
-      storyBox.innerText += "\n" + line;
-    } else {
-      storyBox.innerText = line;
-    }
+    storyBox.innerText = (prev && prev.type==="text")
+                          ? storyBox.innerText+"\n"+line
+                          : line;
+
     nextBtn.style.display   = "inline-block";
     beforeBtn.style.display = currentStep > 0 ? "inline-block" : "none";
 

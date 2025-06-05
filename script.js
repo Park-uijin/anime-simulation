@@ -11,7 +11,7 @@ const bgMap = {
   default:      'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/start-bg.jpg',
   attack_root:  'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/root-bg.jpg',
   attack_fight: 'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/fight-bg.jpg',
-  attack_run:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/fight-bg.jpg',
+  attack_run:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/run-bg.jpg',
   attack_test:  'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/test-bg.jpg',
   attack_get:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/get-bg.jpg',
   attack_out:   'https://raw.githubusercontent.com/Park-uijin/anime-simulation/main/out-bg.jpg',
@@ -29,7 +29,7 @@ const stories = {
       choices: [
         {
           text: "싸운다",
-          result: "${name} 무기를 들고 앞으로 나아갔다.",
+          result: "무기를 들고 앞으로 나아갔다.",
           nextKey: "attack_fight"
         },
         {
@@ -158,6 +158,7 @@ function startStory() {
   // 루트 스토리 로드
   currentKey = "attack_root";
   currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
+  changeBackground();
 
   // ${selectedCharacter} 치환
   currentStory.forEach(step => {
@@ -170,18 +171,27 @@ function startStory() {
     }
   });
 
-  // startStory() 끝부분에 배경 기본 세팅
-  document.body.style.backgroundImage = `url('${bgMap.default}')`;
-
   document.getElementById("name-screen").classList.add("hidden");
   document.getElementById("story-screen").classList.remove("hidden");
 
   currentStep = 0;
   displayStep();
+
+}
+
+function changeBackground() {
+  const url = bgMap[currentKey] || bgMap.default;
+  document.body.style.backgroundImage = `url('${url}')`;
 }
 
 function replaceName(text){
   return text.replace(/\$\{name\}/g, selectedCharacter);
+}
+
+function showEnding(msg){
+  document.getElementById('story-screen').classList.add('hidden');
+  document.getElementById('endingMsg').innerText = msg;
+  document.getElementById('ending-screen').classList.remove('hidden');
 }
 
 // ─── 스토리 한 스텝씩 렌더링 ────────────────────────────────────────
@@ -192,8 +202,6 @@ function displayStep() {
   const nextBtn     = document.getElementById("next-button");
   const beforeBtn   = document.getElementById("before-button");
   const homeBtn     = document.getElementById("home-button");
-  const endingScreen  = document.getElementById("ending-screen");
-  const endingMsg     = document.getElementById("endingMsg");
   
   nextBtn.style.display = "inline-block";
   beforeBtn.style.display = "inline-block";
@@ -213,13 +221,11 @@ function displayStep() {
     // 기본 엔딩
     document.getElementById("story-screen").classList.add("hidden");
     // 🔸 attack_plan 의 엔딩일 때만 문구 교체
-    if (currentKey === "attack_plan") {
-      endingMsg.innerText = "진실을 깨달은 당신, 다음 여정을 준비하세요.";
-    } else {
-      endingMsg.innerText = "당신의 여정은 여기서 끝났습니다.";
-    }
+    const finalTxt = (currentKey === 'attack_plan')
+        ? '진실을 깨달은 당신, 새로운 여정을 준비하세요.'
+        : '당신의 여정은 여기서 끝났습니다.';
+    showEnding(finalTxt);
 
-    endingScreen.classList.remove("hidden");
     return;
   }
 
@@ -234,7 +240,13 @@ function displayStep() {
     } else {
       storyBox.innerText = step.content;
     }
-
+    
+    if (currentStep === currentStory.length - 1) {
+      setTimeout(() => {
+        showEnding('당신의 여정은 여기서 끝났습니다.');
+      }, 1500);
+    }
+    
     nextBtn.style.display   = "inline-block";
     beforeBtn.style.display = currentStep > 0 ? "inline-block" : "none";
 
@@ -282,6 +294,7 @@ function displayStep() {
           // 분기 스토리 배열 로드
           currentKey = choice.nextKey;
           currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
+          changeBackground();
 
           // 다시 ${selectedCharacter} 치환
           currentStory.forEach(step2 => {

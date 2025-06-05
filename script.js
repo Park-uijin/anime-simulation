@@ -213,11 +213,10 @@ function displayStep() {
     // 기본 엔딩
     document.getElementById("story-screen").classList.add("hidden");
     // 🔸 attack_plan 의 엔딩일 때만 문구 교체
-    if (currentKey === "attack_plan") {
-      endingMsg.innerText = "진실을 깨달은 당신, 다음 여정을 준비하세요.";  // 원하는 문구
-    } else {
-      endingMsg.innerText = "당신의 여정은 여기서 끝났습니다."; // 기본 문구
-    }
+    endingMsg.innerText =
+      currentKey === "attack_plan"
+        ? "진실을 깨달은 당신, 다음 여정을 준비하세요."
+        : "당신의 여정은 여기서 끝났습니다.";
 
     endingScreen.classList.remove("hidden");
     return;
@@ -229,9 +228,11 @@ function displayStep() {
     const prevStep = currentStory[currentStep - 1];
     const line = replaceName(step.content);
 
-    storyBox.innerText = (prev && prev.type==="text")
-                          ? storyBox.innerText+"\n"+line
-                          : line;
+    if (prevStep && prevStep.type === "text") {
+      storyBox.innerText += "\n" + step.content;
+    } else {
+      storyBox.innerText = step.content;
+    }
 
     nextBtn.style.display   = "inline-block";
     beforeBtn.style.display = currentStep > 0 ? "inline-block" : "none";

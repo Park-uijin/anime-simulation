@@ -43,7 +43,7 @@ const stories = {
 
   attack_fight: [
     { type: "text", content: "나아갔지만 공포에 사로잡혀 몸이 움직이지 않는다." },
-    { type: "text", content: "거인이 기괴하게 다가오고 있다." },
+    { type: "text", content: "기괴한 거인이 다가왔다." },
     { type: "text", content: ".........." },
     { type: "text", content: "${name}은 그 자리에서 거인의 핏방울에 물들었다. 사망했다."}
   ],
@@ -213,10 +213,11 @@ function displayStep() {
     // 기본 엔딩
     document.getElementById("story-screen").classList.add("hidden");
     // 🔸 attack_plan 의 엔딩일 때만 문구 교체
-    endingMsg.innerText =
-      currentKey === "attack_plan"
-        ? "진실을 깨달은 당신, 다음 여정을 준비하세요."
-        : "당신의 여정은 여기서 끝났습니다.";
+    if (currentKey === "attack_plan") {
+      endingMsg.innerText = "진실을 깨달은 당신, 다음 여정을 준비하세요.";
+    } else {
+      endingMsg.innerText = "당신의 여정은 여기서 끝났습니다.";
+    }
 
     endingScreen.classList.remove("hidden");
     return;

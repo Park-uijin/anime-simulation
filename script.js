@@ -181,8 +181,6 @@ function startStory() {
 
   currentStep = 0;
   displayStep();
-  changeBackground();
-
 }
 
 function replaceName(text){
@@ -282,7 +280,7 @@ function displayStep() {
           // 분기 스토리 배열 로드
           currentKey = choice.nextKey;
           currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
-          changeBackground();
+        
 
           // 다시 ${selectedCharacter} 치환
           currentStory.forEach(step2 => {

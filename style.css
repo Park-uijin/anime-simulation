@@ -236,7 +236,7 @@ html, body {
 }
 
 /* ─── 16. 엔딩 화면(#ending-screen) ─── */
-#ending-screen {
+#ending-screen, #custom-ending-screen  {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 10;
 }
@@ -364,6 +364,36 @@ html, body {
   opacity: 1 !important;
   pointer-events: auto !important;
   z-index: 9999 !important;      /* 어떤 요소 위에서도 */
+}
+
+/* ─── 커스텀 엔딩 화면 ───────────────────────────── */
+#custom-ending-screen{
+  background-color: rgba(0,0,0,0.8);   /* 끝 화면과 통일 */
+  z-index: 20;                         /* 끝 화면보다 위로 */
+}
+
+/* 메시지 한 줄 중앙 정렬 + 약간 크게 */
+#custom-ending{
+  max-width: 90%;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+/* ─── “처음으로” 버튼도 동일 크기 & 정렬 ─── */
+#custom-ending-screen button{
+  padding: 12px 25px;           /* next/prev 와 동일 */
+  font-size: 1.1rem;
+  border: 2px solid rgba(255,255,255,.7);
+  border-radius: 6px;
+  background: rgba(255,255,255,.15);
+  color:#fff;
+  cursor:pointer;
+  transition:background .2s,transform .2s;
+}
+#custom-ending-screen button:hover{
+  background: rgba(255,255,255,.35);
+  transform: translateY(-2px);
 }
 
 /* 위치 고정 – 화면 크기 변해도 항상 모서리에 붙습니다 */

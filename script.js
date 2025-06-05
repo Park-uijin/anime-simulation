@@ -165,16 +165,15 @@ function startStory() {
   currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
   changeBackground();
 
-  // ${selectedCharacter} 치환
-  currentStory.forEach(step => {
-    if (step.type === "text") {
-      step.content = step.content.replace(/\$\{selectedCharacter\}/g, selectedCharacter);
-    } else if (step.type === "choice") {
-      step.choices.forEach(c => {
-        c.result = c.result.replace(/\$\{selectedCharacter\}/g, selectedCharacter);
-      });
-    }
-  });
+  currentStory.forEach(step=>{
+  if (step.type==="text"){
+    step.content = replaceName(step.content);
+  }else if (step.type==="choice"){
+    step.choices.forEach(c=>{
+      c.result = replaceName(c.result);
+    });
+  }
+});
 
   document.getElementById("name-screen").classList.add("hidden");
   document.getElementById("story-screen").classList.remove("hidden");
@@ -183,8 +182,9 @@ function startStory() {
   displayStep();
 }
 
-function replaceName(text){
-  return text.replace(/\$\{name\}/g, selectedCharacter);
+// util
+function replaceName(str){
+  return str.replace(/\$\{name\}/g, selectedCharacter);
 }
 
 
@@ -225,17 +225,19 @@ function displayStep() {
     return;
   }
 
-  // 2) 텍스트 스텝 처리
-  if (step.type === "text"){
-    const line    = replaceName(step.content);         // ← 치환
-    const prev    = currentStory[currentStep-1];
-
+  if (step.type === "text") {
     storyBox.style.display = "block";
-    storyBox.innerText = (prev && prev.type==="text")
-                         ? storyBox.innerText + "\n" + line
-                         : line;
+    const prevStep = currentStory[currentStep - 1];
+    const line = replaceName(step.content);
 
-    beforeBtn.style.display = currentStep>0 ? "inline-block" : "none";
+    if (prevStep && prevStep.type === "text") {
+      storyBox.innerText += "\n" + line;
+    }else {
+      storyBox.innerText = line;
+    }
+    
+    nextBtn.style.display   = "inline-block";
+    beforeBtn.style.display = currentStep > 0 ? "inline-block" : "none";
     
     // “의문의 책” 애니메이션
     if (
@@ -280,28 +282,22 @@ function displayStep() {
           // 분기 스토리 배열 로드
           currentKey = choice.nextKey;
           currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
-        
+          changeBackground();        
 
           // 다시 ${selectedCharacter} 치환
-          currentStory.forEach(step2 => {
-            if (step2.type === "text") {
-              step2.content = step2.content.replace(
-                /\$\{name\}/g,
-                selectedCharacter
-              );
-            } else if (step2.type === "choice") {
-              step2.choices.forEach(c2 => {
-                c2.result = c2.result.replace(
-                  /\$\{name\}/g,
-                  selectedCharacter
-                );
+          currentStory.forEach(step=>{
+            if (step.type==="text"){
+              step2.content = replaceName(step2.content);
+            }else if (step.stype==="choice"){
+              step.choices.forEach(c=>{
+                c2.result = replaceName(c2.result);
               });
             }
-          });
+          }); 
 
           currentStep = 0;
           displayStep();
-        }, 1500);
+        }, 3000);
       };
 
       choiceBox.appendChild(btn);

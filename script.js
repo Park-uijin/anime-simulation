@@ -45,7 +45,7 @@ const stories = {
     { type: "text", content: "나아갔지만 공포에 사로잡혀 몸이 움직이지 않는다." },
     { type: "text", content: "거인이 기괴하게 다가오고 있다." },
     { type: "text", content: ".........." },
-    { type: "text", content: "${name}은 그 자리에서 거인의 핏방울에 물들었다. 사망했다.}
+    { type: "text", content: "${name}은 그 자리에서 거인의 핏방울에 물들었다. 사망했다."}
   ],
 
   attack_run: [
@@ -301,7 +301,7 @@ function displayStep() {
 
     choiceBox.classList.remove("hidden");
   }
- }
+ 
 }
 
 // ─── “다음” 버튼 클릭 시 ─────────────────────────────────────────────

@@ -145,6 +145,11 @@ function goToNameInput() {
   document.getElementById("name-screen").classList.remove("hidden");
 }
 
+function changeBackground() {
+  const url = bgMap[currentKey] || bgMap.default;
+  document.body.style.backgroundImage = `url('${url}')`;
+}
+
 // ─── 이름 입력 후 스토리 시작 ────────────────────────────────────────
 function startStory() {
   const nameInput = document.getElementById("player-name").value.trim();
@@ -176,23 +181,14 @@ function startStory() {
 
   currentStep = 0;
   displayStep();
+  changeBackground();
 
-}
-
-function changeBackground() {
-  const url = bgMap[currentKey] || bgMap.default;
-  document.body.style.backgroundImage = `url('${url}')`;
 }
 
 function replaceName(text){
   return text.replace(/\$\{name\}/g, selectedCharacter);
 }
 
-function showEnding(msg){
-  document.getElementById('story-screen').classList.add('hidden');
-  document.getElementById('endingMsg').innerText = msg;
-  document.getElementById('ending-screen').classList.remove('hidden');
-}
 
 // ─── 스토리 한 스텝씩 렌더링 ────────────────────────────────────────
 function displayStep() {
@@ -202,6 +198,8 @@ function displayStep() {
   const nextBtn     = document.getElementById("next-button");
   const beforeBtn   = document.getElementById("before-button");
   const homeBtn     = document.getElementById("home-button");
+  const endingScreen  = document.getElementById("ending-screen");
+  const customEnding  = document.getElementById("custom-ending-screen");
   
   nextBtn.style.display = "inline-block";
   beforeBtn.style.display = "inline-block";
@@ -218,43 +216,33 @@ function displayStep() {
 
   // 1) 지금 스텝이 없으면 → 엔딩 처리
   if (!step) {
-    // 기본 엔딩
     document.getElementById("story-screen").classList.add("hidden");
-    // 🔸 attack_plan 의 엔딩일 때만 문구 교체
-    const finalTxt = (currentKey === 'attack_plan')
-        ? '진실을 깨달은 당신, 새로운 여정을 준비하세요.'
-        : '당신의 여정은 여기서 끝났습니다.';
-    showEnding(finalTxt);
-
+    // (a) "attack_plan" 분기에서 커스텀 엔딩을 띄우고 싶다면 여기서 분기
+    if (currentKey === "attack_plan") {
+      customEnding.classList.remove("hidden");
+      return;
+    }
+    // (b) 그 외에는 일반 엔딩 화면(게임 오버)으로
+    endingScreen.classList.remove("hidden");
     return;
   }
 
   // 2) 텍스트 스텝 처리
-  if (step.type === "text") {
+  if (step.type === "text"){
+    const line    = replaceName(step.content);         // ← 치환
+    const prev    = currentStory[currentStep-1];
+
     storyBox.style.display = "block";
-    const prevStep = currentStory[currentStep - 1];
-    const line = replaceName(step.content);
+    storyBox.innerText = (prev && prev.type==="text")
+                         ? storyBox.innerText + "\n" + line
+                         : line;
 
-    if (prevStep && prevStep.type === "text") {
-      storyBox.innerText += "\n" + step.content;
-    } else {
-      storyBox.innerText = step.content;
-    }
+    beforeBtn.style.display = currentStep>0 ? "inline-block" : "none";
     
-    if (currentStep === currentStory.length - 1) {
-      setTimeout(() => {
-        showEnding('당신의 여정은 여기서 끝났습니다.');
-      }, 1500);
-    }
-    
-    nextBtn.style.display   = "inline-block";
-    beforeBtn.style.display = currentStep > 0 ? "inline-block" : "none";
-
     // “의문의 책” 애니메이션
     if (
       currentKey === "attack_plan" &&
-      step.content.includes("의문의 책을 발견했다")
-    ) {
+      step.content.includes("의문의 책을 발견했다")) {
       showBookAnimation();
     }
   }

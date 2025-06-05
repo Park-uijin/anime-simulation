@@ -297,4 +297,4 @@ function beforeStory() { if (currentStep>0) { currentStep--; displayStep(); } }
 function goHome() {
   location.reload();
 }
-}
+

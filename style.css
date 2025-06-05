@@ -64,7 +64,7 @@ html, body {
 .start-button {
   position: absolute;
   top: 20px;
-  right: 90px;
+  right: 50px;
   z-index: 999;
   background-color: rgba(255, 255, 255, 0.3);
   color: #000;
@@ -240,7 +240,7 @@ html, body {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 10;
 }
-#ending-screen h2, #ending-screen p {
+#ending-screen h2, #ending-screen {
   color: #f0f0f0;
 }
 #ending-screen button {

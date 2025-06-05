@@ -82,7 +82,7 @@ const stories = {
           text: "편한 헌병단에 입단한다.",
           result: "${name}은 왕을 호위하러 헌병단에 입단했다.",
           nextKey: "attack_in"
-        }
+        },
         {
           text: "힘든 조사병단에 입단한다.",
           result: "벽외 조사를 나간다.",

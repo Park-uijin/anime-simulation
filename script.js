@@ -29,7 +29,7 @@ const stories = {
       choices: [
         {
           text: "싸운다",
-          result: "당신은 무기를 들고 앞으로 나아갔다.",
+          result: "${name} 무기를 들고 앞으로 나아갔다.",
           nextKey: "attack_fight"
         },
         {
@@ -45,11 +45,11 @@ const stories = {
     { type: "text", content: "나아갔지만 공포에 사로잡혀 몸이 움직이지 않는다." },
     { type: "text", content: "거인이 기괴하게 다가오고 있다." },
     { type: "text", content: ".........." },
-    { type: "text", content: `${selectedCharacter}은 그 자리에서 거인의 핏방울에 물들었다. 사망했다.` }
+    { type: "text", content: "${name}은 그 자리에서 거인의 핏방울에 물들었다. 사망했다.}
   ],
 
   attack_run: [
-    { type: "text", content: `${selectedCharacter}은 필사적으로 도망쳤다.` },
+    { type: "text", content: "${name}은 필사적으로 도망쳤다." },
     { type: "text", content: "뒤에서 비명과 울음이 뒤섞인 소리가 난다…" },
     { type: "text", content: "다행히 배에 탑승해 월 로제에 도착했다." },
     {
@@ -62,7 +62,7 @@ const stories = {
         },
         {
           text: "식량난 해결을 위해 전쟁에 간다.",
-          result: `${selectedCharacter}은 월 로제를 나가 전쟁터로 향했다.`,
+          result: "${name}은 월 로제를 나가 전쟁터로 향했다.",
           nextKey: "attack_get"
         }
       ]
@@ -72,7 +72,7 @@ const stories = {
   attack_test: [
     { type: "text", content: "훈련이 생각한 것보다 더 힘들다." },
     { type: "text", content: "이렇게 저렇게 하다보니 살아남았다." },
-    { type: "text", content: "동료들과 유대를 쌓았다. 장과 친해졌다." },
+    { type: "text", content: "동료들과 유대를 쌓았다." },
     { type: "text", content: "......<몇 년 후>" },
     { type: "text", content: "드디어 훈련이 끝났다." },
     {
@@ -85,7 +85,7 @@ const stories = {
         },
         {
           text: "편한 헌병단에 입단한다.",
-          result: `${selectedCharacter}은 왕을 호위하러 헌병단에 입단했다.`,
+          result: "${name}은 왕을 호위하러 헌병단에 입단했다.",
           nextKey: "attack_in"
         }
       ]
@@ -93,11 +93,11 @@ const stories = {
   ],
 
   attack_get: [
-    { type: "text", content: `안전한 월 로제에서 벗어났으므로 ${selectedCharacter}은 사망했다.` }
+    { type: "text", content: "안전한 월 로제에서 벗어났으므로 ${name}은 사망했다." }
   ],
 
   attack_out: [
-    { type: "text", content: `${selectedCharacter}은 조사병단에 입단해 힘겨운 임무를 수행한다.` },
+    { type: "text", content: "${name}은 조사병단에 입단해 힘겨운 임무를 수행한다." },
     { type: "text", content: "벽 밖을 처음 나가본다." },
     { type: "text", content: "세계의 비밀을 밝혀내야한다." },
     {
@@ -113,7 +113,7 @@ const stories = {
   ],
 
   attack_in: [
-    { type: "text", content: `${selectedCharacter}은 헌병단에 입단해 왕을 호위하게 되었다.` },
+    { type: "text", content: "${name}은 헌병단에 입단해 왕을 호위하게 되었다." },
     { type: "text", content: "다른 병단에 비해 하는 게 별로 없다." },
     { type: "text", content: "그로 인해 술을 너무 마셔서 거인이 되었다." }
   ],
@@ -180,6 +180,10 @@ function startStory() {
   displayStep();
 }
 
+function replaceName(text){
+  return text.replace(/\$\{name\}/g, selectedCharacter);
+}
+
 // ─── 스토리 한 스텝씩 렌더링 ────────────────────────────────────────
 function displayStep() {
   const step = currentStory[currentStep];
@@ -215,10 +219,12 @@ function displayStep() {
   if (step.type === "text") {
     storyBox.style.display = "block";
     const prevStep = currentStory[currentStep - 1];
+    const line = replaceName(step.content);
+
     if (prevStep && prevStep.type === "text") {
-      storyBox.innerText += "\n" + step.content;
+      storyBox.innerText += "\n" + line;
     } else {
-      storyBox.innerText = step.content;
+      storyBox.innerText = line;
     }
     nextBtn.style.display   = "inline-block";
     beforeBtn.style.display = currentStep > 0 ? "inline-block" : "none";
@@ -266,23 +272,6 @@ function displayStep() {
           // 분기 스토리 배열 로드
           currentKey = choice.nextKey;
           currentStory = JSON.parse(JSON.stringify(stories[currentKey]));
-
-          // 다시 ${selectedCharacter} 치환
-          currentStory.forEach(step2 => {
-            if (step2.type === "text") {
-              step2.content = step2.content.replace(
-                /\$\{selectedCharacter\}/g,
-                selectedCharacter
-              );
-            } else if (step2.type === "choice") {
-              step2.choices.forEach(c2 => {
-                c2.result = c2.result.replace(
-                  /\$\{selectedCharacter\}/g,
-                  selectedCharacter
-                );
-              });
-            }
-          });
 
           currentStep = 0;
           displayStep();

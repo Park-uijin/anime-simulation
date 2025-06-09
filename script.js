@@ -126,6 +126,17 @@ const stories = {
   ]
 };
 
+window.addEventListener('load', () => {
+  const bgm = document.getElementById('bgm');
+  if (bgm) {
+    bgm.play().catch(err => {
+      console.warn('BGM 자동 재생이 차단되었습니다. 화면을 클릭해 주세요.');
+      // 예: 화면 클릭 시 재생
+      document.body.addEventListener('click', () => bgm.play(), { once: true });
+    });
+  }
+});
+
 // ─── 책 이미지 애니메이션 함수 ────────────────────────────────────
 function showBookAnimation() {
   const img = document.createElement("img");

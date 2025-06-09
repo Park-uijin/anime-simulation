@@ -324,7 +324,9 @@ html, body {
   .story-box {
     font-size: 1rem;
   }
-  .button-group button {
+  .button-group button,
+  #ending-screen button,
+  #custom-ending-screen button {
     font-size: 1rem;
     padding: 10px 20px;
   }
@@ -399,3 +401,7 @@ html, body {
 #story-screen #home-button   { position: fixed !important; left: 24px; bottom: 88px; } /* 맨 위 */
 #story-screen #before-button { position: fixed !important; left: 24px; bottom: 24px; } /* 그 아래 64px(= 패딩12×2+글자높이) 띄움 */
 #story-screen #next-button   { position: fixed !important; right:24px; bottom:24px; }
+
+audio#bgm {
+  display: none;
+}

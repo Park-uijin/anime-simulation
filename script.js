@@ -295,21 +295,23 @@ function displayStep() {
       btn.style.cursor    = "pointer";
 
       btn.onclick = () => {
-        // 1) 배경 변경
-        if (choice.nextKey) {
-          loadBranch(choice.nextKey);   
-          return;
-        }
-        // 2) 선택 결과 볼드 표시
-        storyBox.style.display = "block";
-        storyBox.innerHTML = `<span class="bold-text">${choice.result}</span>`;
+       // 1) 선택 결과 보여 주기
+       storyBox.style.display = "block";
+       storyBox.innerHTML = `<span class="bold-text">${choice.result}</span>`;
 
-        // 3) 1.5초 뒤 분기 이동
-        setTimeout(() => {
-          currentStep++;
+       // 2) 1.5초 뒤에 분기 처리
+       setTimeout(() => {
+         if (choice.nextKey) {
+         // 분기로 넘어가기 전에 background, story 배열 로드
+         loadBranch(choice.nextKey);
+         } else {
+           // 단순 다음 스텝
+           currentStep++;
           displayStep();
-        }, 3000);
+         }
+       }, 1500);
       };
+
       
       choiceBox.appendChild(btn);
     });

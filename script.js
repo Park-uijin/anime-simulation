@@ -308,7 +308,7 @@ function displayStep() {
         setTimeout(() => {
           currentStep++;
           displayStep();
-        }, 500);
+        }, 1500);
       };
       
       choiceBox.appendChild(btn);
